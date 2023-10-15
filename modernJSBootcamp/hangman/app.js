@@ -8,13 +8,14 @@ const guesses = document.getElementById('guesses')
 const game = new Hangman('Cat', 2)
 
 puzzle.innerHTML = game.getPuzzle()
-guesses.innerHTML = game.guesses
+guesses.innerHTML = game.remainingGuesses
+console.log(game.status) 
 
 window.addEventListener('keypress', (e) => {
     const guess = String.fromCharCode(e.charCode)
-    game.guess(guess)
+    game.makeGuess(guess)
     puzzle.innerHTML = game.getPuzzle()
-    guesses.innerHTML = game.guesses
+    guesses.innerHTML = game.remainingGuesses
     console.log(game.status)
 })
 

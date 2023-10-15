@@ -11,54 +11,93 @@
 // 8. Display the puzzle now to the browser instead of the console
 // 9. Display the guesses left to the browser instead of the console
 // 10. Separate the Hangman definition from teh rest of the app (use app.js)
+// 11. Setup a new 'status' property with inital value of 'playing'
+// 12. Create method for recalculating status to 'playing', 'finished', 'failed'
+// 13. Call that method after a guess is processed
+// 14. use console.log to print the status
 
 // No guesses? -> ***
 // Guessed "c", "b", "t"? -> c*t
-
-const Hangman = function (word, guesses) {
-    this.word = word
-    this.guesses = guesses
-    this.wordLetters = word.toLowerCase().split('')
+const Hangman = function (word, remainingGuesses) {
+    this.word = word.toLowerCase().split('')
+    this.remainingGuesses = remainingGuesses
     this.guessedLetters = []
     this.status = 'playing'
 }
-Hangman.prototype.statusUpdate = function () {
-    if (this.guesses < 1) {
+
+Hangman.prototype.calculateStatus = function () {
+
+    // HERE'S ONE MORE APPROACH OF DOING THIS BUT WITH A METHOD CREATED ESPECIALLY FOR THIS TYPE OF SITUATION
+    // 'every' only returns true if everything in your array passes
+    // your return test
+    const finished = this.word.every((letter) =>this.guessedLetters.includes(letter))
+
+
+    // // ANOTHER WAY TO STRUCTURE THIS ONE WHICH IS ACTUALLY SHORTER
+    // const lettersUnguessed = this.word.filter((letter) => {
+    //     return !this.guessedLetters.includes(letter)
+    // })
+    // const finished = lettersUnguessed.length === 0
+
+    // FIRST WAY OF STRUCTURING THIS
+    // let finished = true
+
+    // this.word.forEach((letter) => {
+    //     if (this.guessedLetters.includes(letter)) {
+
+    //     } else {
+    //         finished = false
+    //     }
+    // })
+
+    if (this.remainingGuesses === 0) {
         this.status = 'failed'
+    } else if (finished) {
+        this.status = 'finished'
+    } else {
+        this.status = 'playing'
     }
 }
+
+Hangman.prototype.getPuzzle = function () {
+    let puzzle = ''
+
+    this.word.forEach((letter) => {
+        if (this.guessedLetters.includes(letter) || letter === ' ') {
+            puzzle += letter
+        } else {
+            puzzle += '*'
+        }
+    })
+
+    return puzzle
+}
+
+Hangman.prototype.makeGuess = function (guess) {
+    guess = guess.toLowerCase()
+    const isUnique = !this.guessedLetters.includes(guess)
+    const isBadGuess = !this.word.includes(guess)
+
+    if (isUnique) {
+        this.guessedLetters.push(guess)
+    }
+
+    if (isUnique && isBadGuess) {
+        this.remainingGuesses--
+    }
+
+    this.calculateStatus()
+}
+
+
+
 // my solution works perfectly, but I forgot to make the g (guess) lowercase
 // also there's no reason in my second if statement to confirm what's in this.wordLetters
 // Still works, but I could simplify it.
 // Also I'm seeing some repetitive code below, 4 calls to Array.includes on two
 // different arrays. I should use some varibles to make this more readable.
-Hangman.prototype.guess = function (g) {
-    g = g.toLowerCase()
-    if (!this.wordLetters.includes(g) && !this.guessedLetters.includes(g)) {
-        this.guessedLetters.push(g)
-        this.guesses--
-        return
-    } else if (this.wordLetters.includes(g) && !this.guessedLetters.includes(g)) {
-        this.guessedLetters.push(g)
-        return
-    }
-    this.statusUpdate()
-}
 
 
-Hangman.prototype.getPuzzle = function () {
-    let result = ''
-    this.wordLetters.forEach((letter) => {
-        if (this.guessedLetters.includes(letter)) {
-            result += letter
-        } else if (letter === ' ') {
-            result += ' '
-        } else {
-            result += '*'
-        }
-    })
-    return result
-}
 
 
 
