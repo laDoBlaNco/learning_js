@@ -12,13 +12,19 @@ we use h1, h2, h3, etc for their 'level' of importance in the document. I could 
 appearance with CSS. Also we should have only ONE h1 at most. If we are doing this semantically we can't have
 2 top level headings. -->
 
+
+
     <!-- 'alt' is used as alternative info on an image or for the screenreaders to pick up -->
     <img src="C:\Users\white\OneDrive\Pictures\Screenshots\Screenshot 2023-10-11 091738.png" width="200px" alt=" Pic of
-        fam">
-
-    <a href="http://www.google.com">I AM A LINK TO GOOGLE</a>
-
-    <a href="about.html">ABOUT PAGE</a>
+fam">
+    <!-- div is for 'content division element' and is a block-level element. In just HTML you may not have
+a good reason us use it. But when we get to CSS, it helps us group content together-->
+    <div>
+        <!-- a 'span' is a general element, again to be used with CSS to single out specific items. They are
+        inline, so adding them into the page won't change the visible structure of the document at all -->
+        <a href="http://www.google.com">I AM A <span>LINK</span> TO GOOGLE</a>
+        <a href="about.html">ABOUT PAGE</a>
+    </div>
     <p>The <b>chicken</b> (Gallus domesticus) is a domesticated species that arose from the <a
             href="https://en.wikipedia.org/wiki/Red_junglefowl">red
             junglefowl</a>,
