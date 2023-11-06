@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Registration</title>
+</head>
+
+<body>
+    <h1>Race Registration!</h1>
+    <form action="/dummy">
+        <!-- A PLACEHOLDER SHOULD NEVER TAKE THE PLACE OF A LABEL -->
+        <div>
+            <label for="f_name">First Name</label>
+            <input type="text" id="f_name" required placeholder=first_name />
+            <label for="l_name">Last Name</label>
+            <input type="text" id="f_name" required placeholder="last_name">
+        </div>
+        <p>Select a Race:</p>
+        <div>
+            <input type="radio" id="fun" name="race" value="fun">
+            <label for="fun">Fun Run 5k</label>
+        </div>
+        <div>
+            <input type="radio" id="half" name="race" value="half">
+            <label for="half">Half Marathon</label>
+        </div>
+        <div>
+            <input type="radio" id="full" name="race" value="full">
+            <label for="full">Full Marathon</label>
+        </div>
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+        <div>
+            <label for="age_group">Select Age Group</label>
+            <select name="age_group" id="age_group">
+                <option value="under_18" selected>Under 18</option>
+                <option value="18-30">18-30</option>
+                <option value="30-50">30-50</option>
+                <option value="50+">50+</option>
+            </select>
+        </div>
+        <button type="submit">Register!</button>
+    </form>
+</body>
+
+</html>

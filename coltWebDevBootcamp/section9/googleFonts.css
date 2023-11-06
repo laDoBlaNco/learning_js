@@ -1,0 +1,31 @@
+/* The issue with fonts is that we can't guarantee that they will be on everyones machines. There
+is a small list of web safe fonts, but websites use a lot more than that small list. So one option 
+we have is including a font in our document. They can be bought and can get very expensive as they charge
+initially and then per page view and number times page is loaded, etc. So what a great service Google is 
+providing with its free fonts. One of the most usefull free resources on the internet. 992 different web familes
+for free. */
+
+body {
+  font-family: 'montserrat', sans-serif;
+}
+
+main {
+  width: 60%;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0;
+}
+
+h1+h2 {
+  margin-top: 10px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Roboto, san-serif;
+  font-weight: 100;
+}

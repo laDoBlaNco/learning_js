@@ -1,0 +1,66 @@
+/* As we see from before certain elements are block level, so we see how the h1s for example have a background color that reaches
+all the way to the end of the screen. While Spans are inline.
+We can change this behavior. */
+
+/*here turning block level elements to inline*/
+/* h1 {
+    background-color: palegoldenrod;
+    border: 1px solid black;
+    display: inline;
+} */
+
+/* ... and inline elements to block level */
+/* span {
+    background-color: paleturquoise;
+    border: 1px solid black;
+    display: block;
+} */
+
+/* This is important because there are certain behaviors that inline and block level elements behavior with padding, margin, and height. Going back to why we can't moving anything and everything
+with margins.
+
+Notice that when we try to add padding or width to an inline element (span) nothing happens. Why??? That's just inline elements. If its inline
+width is ignored, height is ignored, padding is respected somewhat, but it doesn't push content away, it just covers it, so not even really what we expect. 
+padding is there but the rest of the content doesn't respect it, its ignored. 
+What about margins. they are respected horizontally on the line where our span is, but vertically its complete ignored. this is important to understand.
+
+*/
+span {
+    background-color: palevioletred;
+    border: 1px solid black;
+    width: 500px;
+    padding: 50px;
+    margin: 50px
+}
+
+/* What about block elements?
+   widths are respected, height is respected, padding and margins are respected by the other elements. 
+   This brings us to inline-block. This is basicaly to give our inline elements the respect they need when it comes to width, height, padding and margins ;)
+   Also making our block level elements act like inline elements, but with the respect on the name.
+ */
+
+h1 {
+    background-color: paleturquoise;
+    border: 1px solid black;
+    width: 300px;
+    height: 200px;
+    padding: 50px;
+    margin: 100px;
+}
+
+div {
+    height: 200px;
+    width: 200px;
+    background-color: olivedrab;
+    border: 5px solid black;
+    /* Just making them inline gives us issues cuz width and height aren't respected, therefore we just get a block of borders */
+    /* display: inline; */
+    display: inline-block;
+    /* We get what we want. they will lie next to each other (dependent of course on the width of the screen). So they are acting like inline elements, but respecting margins, padding, etc. */
+}
+
+/* One last thing with display for now. We can use  display to hide elements.  */
+h1 {
+    display: none;
+    /* meaning they are still there but not taking up any space on the page.  */
+}

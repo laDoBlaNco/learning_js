@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter to Base64</title>
+</head>
+
+<body>
+    <img src="kyx.jpg" id="srcImage" alt="">
+
+    <script>
+        // get the image element
+        const img = document.getElementById('srcImage');
+        // Create a canvas element
+        const canvas = document.createElement('canvas');
+        // set canvas dimensions to the image dimensions
+        canvas.width = img.width;
+        canvas.height = img.height;
+        // Get the canvas context
+        const ctx = canvas.getContext('2d');
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0);
+        // Get the Base64-encoded data
+        const dataURL = canvas.toDataURL();
+        // print the code
+        console.log(dataURL);
+    </script>
+</body>
+
+</html>

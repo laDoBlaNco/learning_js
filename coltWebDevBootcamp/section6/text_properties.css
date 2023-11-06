@@ -1,0 +1,62 @@
+h1 {
+    text-align: center;
+    font-weight: 400;
+    /* text-align only works within the confines of the content. So if the  content width
+        is only 50%, then text will align accordingly to that width. */
+    text-decoration: orange underline wavy;
+    letter-spacing: 15px;
+    font-size: 80px;
+    font-family: Futura, arial;
+}
+
+a {
+    text-decoration: none
+}
+
+p {
+    line-height: 2;
+}
+
+
+/* 
+font-weight can be adjusted using common words:
+normal, bold, lighter, bolder or
+with numbers:
+100
+200
+300
+400 - (Normal)
+500
+600
+700 - (Bold)
+800
+900
+Not all browsers or fonts will have all the numbers. If the browser doesn't have those numbers
+then the result will default to the closes size.
+
+Text-decoration is what controls the appearance of decorative lines on text. Underlines, strik-through
+etc.  Alot of times we use this to remove underlines as well, for example to remove the line on a link
+
+Line-height controls the height of the line itself, not the text. so for example making something double-spaced.
+
+letter-spacing controls the spaces between the letters
+
+font-size is pretty simple in itself, but the options to use very many. Even the units used are plentiful::after: 
+In units we have two groups:
+    Relative:               Absolute: 
+    EM                      PX
+    REM                     PT
+    VH                      CM
+    VW                      IN
+    %                       MM
+    ...and more   
+    
+    PX are the most commonly used. Absolute means  that the resulting size doesn't depend on anything else. NOTE: 1px
+    does not necessarily equal the width of exactly one pixel! It depends on the screen on the machine. 
+    Not recommended for responsive websits though. 
+
+    Font-family is what we use to change the actual fonts. But its not that simple. Until we can install custom fants
+    we need to use the default fonts. Typically we'll use font stacks. Which is basically a list of fonts in order of
+    preference
+
+    */

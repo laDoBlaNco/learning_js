@@ -1,0 +1,31 @@
+/* 
+Alpha channel for colors
+Just like we have the rgb(0,0,0) colors, we also have rgba(0,0,0,0) colors with the 
+'a' meaning alpha channel. Its not 0-255 but 0-1 and it determines the transparency
+of a color. Note: we can also use this with hex colors adding two more digits to the 00-FF
+*/
+
+section {
+    width: 500px;
+    height: 500px;
+    background-color: magenta;
+}
+
+#rgba {
+    width: 50%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    /* Note that this is just for the background. If we were to put anything else in this div
+    it would not be transparent. */
+}
+
+/* Opacity is different. Opacity is not an specific color but its a property that governs the transparency
+of an entire element including its content (children). Like the alpha channel it goes from 0 to 1 */
+#opacity {
+    width: 50%;
+    height: 50%;
+    background-color: yellow;
+    opacity: 0.3;
+
+}
+

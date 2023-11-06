@@ -1,0 +1,229 @@
+/* Universal selector - it may be a good idea for some things, but Colt has never used it 
+It selects everything regardless of the element. I have seen this used with some resetting of defaults
+though and some other technical things, so maybe we'll see that later, but if Colt has never used it, then 
+maybe those things aren't necessary either. */
+/* * {
+    color: pink;
+    background-color: cyan;
+} */
+
+/* element selector controls specific selectors, which we've done before 
+we can also use a ',' to combine selectors. Very common.*/
+body {
+    background-color: #f1faee;
+}
+
+button {
+    font-size: 30px;
+    background-color: #a8dadc;
+}
+
+h1,
+h2 {
+    color: #1d3557;
+}
+
+/* id selectors. Remembering that we associate labels to their elements. We use those same ids
+to connect to the selectors as well (and later to JS)
+Don't be tempted to use ids for all styling. On a single page its better to have a handful only as 
+we have other ways to style  multiple elements.  */
+#signup {
+    background-color: #1d3557;
+    color: #f1faee;
+}
+
+/* Now we have the 2nd most used selector, the 'class'. its very similar to an id except, like 'name' connects 
+various elements, class connects various elements for styling */
+span {
+    color: #457b9d;
+}
+
+.tag {
+    background-color: #e63946;
+    color: #f1faee;
+    font-size: 16px;
+}
+
+/* 'descendant' selectors are basically to select nested elements. Don't get confused with spaces and commas
+commas will select both elements and spaces select on the last element in the selector chain. The nesting can be
+anywhere. for example if you have a 'nav ul li a' you can also just say 'nav a'  
+A very common selector*/
+.post a {
+    color: #457b9d;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+footer a {
+    color: #e63946;
+}
+
+/* These two selectors aren't as widely used (adjacent and direct-child). And they have the same syntax as I learned 
+in emmett. O sea '+' and '>' They technically called 'combinators' rather than selectors 
+The adjacent selector refers to an element directly following another specific element at the same level
+The direct child selects the direct descendant (1 level down). So not like the general descendant selector where it
+didn't matter what level, as long as it was nested. this must be the very next  level down.
+
+These aren't as commonly used but they do come in handy at times. 
+*/
+/* input+button {
+    background-color: pink;
+    ;
+} */
+
+h2+button {
+    font-size: 20px;
+    /* background-color: magenta; */
+}
+
+footer>a {
+    color: #457b9d;
+}
+
+/* The attribute selector allows us to select elements based on a specific attribute (such as type) 
+There are other more uncommon variants as well where we an select elements where anything in the attribute is a specific
+item (fuzzy matching) using *=. Such as: 
+a[href*=google]{} (this is case-sensitive, though there are ways to make it case-insenitive)
+a[href$=go]{} (this is ends with 'go')
+(more versions are in mdn)
+*/
+input[type="password"] {
+    color: greenyellow;
+}
+
+a[href*=google] {
+    color: magenta;
+}
+
+/* 
+section[class='post'] {
+    background-color: purple;
+} 
+*/
+
+/* pseudo classes are pretty much modifiers. They check the state of certain elements. or based on position in the case of nth-of-type
+They all start with a ':' 
+For the nth-of-type we can use:
+nth-of-type(3) which will simply select the 3rd only or
+nth-of-type(3n) which will select EVERY third element
+Many more details in MDN and we can get super granular if we want to*/
+
+.post a:hover {
+    text-decoration: underline;
+}
+
+.post button:active {
+    background-color: #02c39a;
+}
+
+.post:nth-of-type(2n) {
+    background-color: #dfe8dc;
+
+}
+
+/* Now we have psuedo elements as opposed to psuedo classes. Very similar but here we are changing
+specific pieces of the elements. There are only a handful of them.
+We use 2 '::' for these (in chrome using 1 or 2 ':' will still work and many people get them mixed up, but it should be
+':' for psuedo classes and '::' for pseudo elements*/
+
+h2::first-letter {
+    font-size: 50px;
+}
+
+p::first-line {
+    color: purple;
+}
+
+p::selection {
+    background-color: #fcbf49;
+}
+
+/* TODO: Check out and create some examples of ::before and ::after
+So basically ::before and ::after simply create an element before or after a specific element. So if I select an element h2::before, then I'm saying
+to create a element before all H2s: 
+NOTE: 1. We have to use 'content' which is basically a pic or icon or emoji or UTF, etc or it won't be rendered
+      2. The rendered element is considered a child of what ever element its called on */
+h2::before {
+    content: '🤓';
+}
+
+button::after {
+    content: '🤓'
+}
+
+/* 
+        THE CASCADE in CSS: 
+        This is the order your styles are declared in and linked to and it matters in CSS. Styles CASCADE down the stylesheet or onto other sheets as well. So
+        if we have a conflicting style (same selector with same property set to two different  values, the last one set will win. O sea its set to the first but then set
+        to the second in the end. Order matters both on the sheet and in the links to the multiple sheets if we have them. 
+        */
+h1,
+h2 {
+    color: orange;
+}
+
+/* 
+        WTF is Specificity. What wins when there is a conflict. Well in normal situations the order a we spoke about, but there's also a point system referred to as 
+        specificity.  
+        */
+.post button:hover {
+    background-color: #e63946;
+    color: #f1faee;
+}
+
+button:hover {
+    background-color: olive;
+    /* only one button's color changes but all of the buttons sizes change. This means theres a conflict and specificity is coming into play
+            Specificity is how the browser decides which rules to apply when multiple rules could apply to the same element. Its a measure of how SPECIFIC a given 
+            selector is. The more specific the selector "wins" */
+
+}
+
+/* 
+In general without going to specific math I learned before we an keep in mind that 
+1. A combination of elements will beat one single element as we see above because its more specific
+2. An Class selector will beat out an Element selector
+3. An ID selector will always beat a class selector as they are unique and super specific
+4 The real math is the following. Each type of selector (specificity) is like  digits in a number. 
+     0                             0                            0
+ID Selectors        Classes, Attr, Psuedo Classes       Elements, Pseudo-Elements
+
+And just like a number that has hundredths, tenths, and ones, we create a number or score based on everything that a certain rule has and that's the specificity
+score  for said rule. We then compare them and the rule with highest score wins.
+
+Here's a couple examples: 
+
+section p{
+    color:teal;
+}
+would be 002 for having 2 elements vs:
+
+#submit{
+    color:olive;
+}
+would be 100 for having 1 ID 
+
+nav a.active{
+    color:orange;
+}
+would be 012 for having 1 pseudo-class and 2 elements
+
+So its 002 vs 100 vs 012 = winner  100.
+
+When confused we can use tools like the https://specificity.keegan.st/ specificity calculator
+
+
+Something to NOTE is that this isn't the same as a typical number system, meaning If I have 10,20,30 elements it would overpower a class or ID
+I could have 0,0,28 vs a 0,1,0 and the  0,1,0 would still win
+
+There are two other items that have to do with specificity. We said that specificity scores are 3 digits but actually they can be more.
+Inline sytles are more specific than IDs, making it (1 0 0 0), but they are typically not used and Colt recommends not using it 
+
+Also on a style declaration we can add '!important' after the property in a rule. This will make that property THE MOST SPECIFIC thing on the page
+regardless of specificity. This is also something not recommended to use, but we might see it in the wild. It pretty much throws a wrench in the whole
+specificity score. KNOW ABOUT THEM BUT MORE IMPORTANTLY KNOW NOT TO USE THEM!
+
+*/
+button {
+    background-color: magenta !important;
+}

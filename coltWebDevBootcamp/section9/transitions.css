@@ -1,0 +1,65 @@
+/* 
+Transitions is one of or favorite property or sets of properties. Transitions is like border in that it is made up of multiple properties.
+It allows us to animate the transition from one property value to another. 
+*/
+
+/* Simple example */
+.circle {
+    width: 200px;
+    height: 200px;
+    background-color: magenta;
+
+    /* Duration */
+    /* transition: 2s; */
+    /* This sets everything to transition for said seconds, but we can actually specify a lot more than that such as:display:display: 
+       property name - add a specific property that you want the transition to apply to NOTE: Its better to always specify the specific properties that way if we need to make adjustments 
+            later to our transitions we don't start to  get things we didn't expect.
+       duration - just add in seconds(milliseconds) how long you want the transition to take 
+       timing function - There are different ways to do the transition duration. It could be an even transtion, start fast and slow down or start slow and speed up, etc. This can
+            be controlled by the built-in timing functions (ease,ease-in,ease-out,ease-in-out, linear, step-start, step-end, steps, cubic-bezier, etc, etc, etc)
+       delay - after the transition seconds (milliseconds) add seconds(milliseconds) to pass before the transition should begin (can specify the property as 'all' if you want the delay on everything)
+
+    */
+    /* property name: */
+    /* transition: background-color 1s, border-radius 3s; */
+
+    /* delay */
+    /* transition: background-color 2s 1s; */
+}
+
+.circle:hover {
+    background-color: cyan;
+    border-radius: 50%;
+}
+
+/* Timing function examples */
+section div {
+    height: 100px;
+    width: 100px;
+    background-color: turquoise;
+    margin: 20px 0px;
+    transition: margin-left 3s ease-in;
+    /* There's better way to do this which is more performant and we'll get to in a bit, for moving things around. */
+}
+
+section:hover div {
+    margin-left: 100px;
+}
+
+section div:nth-of-type(1) {
+    transition-timing-function: ease-in;
+}
+
+section div:nth-of-type(2) {
+    transition-timing-function: ease-out;
+}
+
+section div:nth-of-type(3) {
+    transition-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+section div:nth-of-type(4) {
+    transition-timing-function: cubic-bezer(0.85, 0, 0.15, 1);
+}
+
+/* NOTE: But they all end at the same time. */

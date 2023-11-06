@@ -1,0 +1,62 @@
+/* 
+Position - 
+This property is one that can a bit tricky but its super useful. Its definition is that it determins the
+element position on the page. More interestingly it also determines the behavior of 4 other properties: 
+'Top'; 'Bottom'; 'Right'; 'Left'
+
+Position options:
+static - default and what all elements are to start with; properties like 'top' have no effect if the element is static
+relative - allows us to position the element relative to itself and we can offset it using top, right, left, and bottom
+    so its still in the document and its original position is still holds other elements from moving, but its actually offset
+    relative to that original position
+absolute - The element is removed from the normal document flow and no space is reserved for the element. Its like its floating above the 
+    document and we can offset it with top, bottom, etc relative to the closest positioned ancestor if any. When we say ancestor positioned
+    we mean that they have a position property set other than static.
+fixed - is also removed the document flow and no space is created for the element in page layout, so again its like its floating above
+    out document. But it is positioned relative to the initial containing block established by the VIEWPORT. O sea it stays on the 
+    screen in the same position even when scrolling.
+sticky - is the same  as fixed but its scrolls normal until it hits the top of the viewport, then its fixed. So if its at the bottom adn we scroll
+    up, it'll scroll normal as if static, but once it hits the top it'll 'stick' and have the same behavior as fixed.
+
+    */
+
+div {
+    width: 100px;
+    height: 100px;
+    background-color: #3d405b;
+    border: 2px solid black;
+    margin: 10px;
+    display: inline-block;
+
+}
+
+#middle {
+    background-color: #81b29a;
+}
+
+#static #middle {
+    position: static;
+    top: 100px;
+}
+
+#relative #middle {
+    position: relative;
+    top: 50px;
+    left: 50px;
+}
+
+#absolute {
+    position: relative;
+}
+
+#absolute #middle {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+}
+
+#fixed #middle {
+    position: fixed;
+    top: 0px;
+    left: 50;
+}

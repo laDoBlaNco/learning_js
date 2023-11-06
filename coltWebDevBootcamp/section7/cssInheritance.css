@@ -1,0 +1,25 @@
+/* Note that there are direct children in body that are text, but the entire
+page text is set to the color or inherited , unless there something set directly on that
+element*/
+body {
+    color: purple;
+}
+
+/* h1 {
+    color: blue
+} */
+
+section {
+    color: aqua;
+}
+
+/* Not that the buttons aren't inhetiting cuz there  are some elements are defaulted to not inherit
+We can get around this by setting the property to 'inherit' */
+form {
+    color: greenyellow;
+}
+
+input,
+button {
+    color: inherit;
+}

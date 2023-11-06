@@ -1,0 +1,19 @@
+h2 {
+    color: #5fcffc;
+    background-color: rgb(89, 151, 0);
+}
+
+button {
+    color: magenta;
+    background-color: cyan;
+}
+
+p {
+    color: olive;
+    /* although this works, background is another property and does much more */
+    background: orange;
+}
+
+body {
+    background-color: rgb(183, 163, 189);
+}

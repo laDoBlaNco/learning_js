@@ -1,0 +1,113 @@
+/*  CSS Units are important though a little boring:
+        Relative Units:
+        EM
+        REM
+        VH
+        VW
+        %
+ 
+        Absolute Units: 
+        PX
+        PT
+        CM
+        IN
+        MM
+    
+   While pixels is probably the only absolute unit we'll see or encounter in the wild, the Relative units are all pretty popular and we will
+   see them a lot. Let's start with %
+   
+   % Perentages:
+   Always relative to some other value. Sometimes its a value from the parent and other times its a value from the element itself.
+   width: 50% - half the width of the parent element
+   line-height: 50% - half the font-size of the element itself
+
+*/
+
+
+/* % of parent */
+section {
+    background-color: #6d6875;
+    width: 400px;
+    height: 400px;
+}
+
+div {
+    background-color: #e5989b;
+    width: 70%;
+    height: 20%;
+}
+
+/* % of itself */
+h1 {
+    font-size: 40px;
+    border: 1px solid black;
+    line-height: 200%;
+}
+
+/* Now we have EMs and REMs (The name "Ms" comes from the width and height of the letter "m" in typography. Interesting tidbit.
+
+With font-size, 1 em equals the font-size of the parent; 2 ems is twice the font-size of the parent, etc.
+With other properties (padding or margin, etc) , 1em is equal to the computed font-size of the element itself.
+
+
+
+*/
+#ems h2 {
+    font-size: 2em;
+    margin-left: 1em;
+}
+
+#ems p {
+    font-size: 1em;
+}
+
+#ems h3 {
+    font-size: 1.5em;
+}
+
+/* Buttons for example are an element that doesn't scale well. If we want out button to text to be bigger or the outter article grows, then the 
+rounded corners change, etc. It just doesn't scale well. 
+But with ems its not absolute. Everything is relative to the parent. So as the article text changes or when put in another element, its font size will scale
+to what the parent element is. Font vs parent element and other proeprties vs the calculated font-size
+ */
+button {
+    font-size: 1em;
+    padding: 0 1em;
+    border-radius: .5em;
+    color: white;
+    background-color: #48a9a6;
+}
+
+/* We didn't set the h2 font-size to 60px, but since the parent article is set to an absolute pixels, the font-size of our h2 is not relative to that 
+Now for other properties such as our margin-left of h2, it will be 1em relative to the H2s calculated font-size, not the parent element, which in this case would be
+2 times what our article is set to. 
+*/
+#ems {
+    font-size: 20px;
+}
+
+/* 
+REMS
+To undestand REMs we need to understand why ems aren't perfect.
+That issue mainly being that nested elements with EMs will cause our font-sizes to either grow or shrink exponentially very quickly
+This is where we need Rood EMS or REMS:
+Relative to the ROOT html element's font-size. Often easier to work with. So the nesting of elements has no effect at all.
+If the root font-size is 20px, 1 rem is always 20px, 2rem is always 40px, etc. No matter how many nested elements, etc. 
+
+*/
+#ems ul {
+    font-size: 1.5em;
+    /* Due to the nested uls, our ems are stacking are shrinking exponentially */
+}
+
+#rems h2 {
+    font-size: 3rem;
+}
+
+#rems h3 {
+    font-size: 2rem;
+}
+
+#rems ul {
+    font-size: 0.8rem;
+}

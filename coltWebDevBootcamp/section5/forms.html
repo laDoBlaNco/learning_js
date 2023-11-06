@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms Demo</title>
+</head>
+
+<body>
+    <h1>Forms Demo</h1>
+    <!-- the form element is just a wrapper element, it doesn't actually do anything on the page. Though its
+    attr do decide the action and method of pushing data to the server as the request -->
+
+    <!-- A button outside of the form doesn't submit -->
+    <button>Outside of Form (DOES NOTHING)</button>
+
+    <form action="/tacos">
+
+        <!-- <input> - the input element is used to create a varient of differnt form controls
+                We have 20+ possible types of inputs ranging from date pickers to checkboxes
+                The 'type' attr is where the magic happens. Changing type dramatically alters
+                the input's behavior and appearance. it also doesn't have a closing tag.  
+                -->
+        <!-- If you create a button and don't explicitly tell it what to do, it'll submit the form
+        by default -->
+        <!-- Now if we add a type attr and tell it to behave like a button, it won't submit -->
+        <button type="button">PLEASE DO NOT SUBMIT THE FORM</button>
+        <p>
+            <label for="username">Enter a username</label>
+            <input type="text" placeholder="username" id="username" name="username">
+        </p>
+        <p>
+            <label for="password">password</label>
+            <input type="password" placeholder="enter your password" id="password" name="password">
+        </p>
+        <BUTTON>IN THE MIDDLE</BUTTON>
+        <p>
+            <label for="color">Enter a Color</label>
+            <input type="color" id="color" name="color">
+        </p>
+        <p>
+            <label for="number">enter a Number</label>
+            <input type="number" placeholder="enter a number" id="number" name="num" min="1" max="1000">
+        </p>
+        <!-- Labels are super important though people don't feel they are. they are important for
+        accessibility and even grouping. The label is typically also clickable. 
+        Super important that we follow this pattern, especially if its for a portfolio or released
+        to the world. We can also nest the input in the label and then not need to use the 'for' and
+        the 'id'. But its not a common approach.-->
+
+        <!-- Buttons are super common and important. We have buttons all over our web apps. There are
+        even buttons that aren't really buttons, but links disguised as buttons with CSS -->
+        <button>Submit</button> <!-- Note tht when we click a button it takes us to our 'action' '/tacos'-->
+        <!-- you can also use an input with type submit. But its not common and semantically its not
+        really correct. Inputs should take input, not just a push  -->
+        <input type="button" value="Click Me">
+
+        <!-- A very important attr for forms is 'name'. Apparently when we submit to a form its the 'name' attr
+        that tells the server where its coming from. When we see for example in the url after a search:
+        reddit.com/search/?q=something
+        That 'q' is the name of the input. I've added a 'name' to the username input above to see the result 
+        http://localhost:3000/tacos?username=chickenman, or 
+        http://localhost:3000/tacos?username=ladoblanco&password=some_password&color=%23b62525&num=69
+        so its used on pretty much all forms that are submitted
+        its easy to use and we'll see it all over the place. For now we are sending all of our data in the url
+        which can be problematic, but we'll find a better to do this later.  -->
+    </form>
+
+    <!-- so using the form action attribute we can actually send our queries to other pages if we use the
+    correct url format including the name attr on our input needs to match. Below we are using for reddit. -->
+    <h2>Hi-Jacking Searches</h2>
+    <h3>Search Reddit</h3>
+    <form action="https://www.reddit.com/search">
+        <input type="text" name="q">
+        <button>Search Reddit</button>
+    </form>
+    <h3>Search Google</h3>
+    <form action="https://www.google.com/search">
+        <input type="text" name="q">
+        <button>Search Google</button>
+    </form>
+    <h3>Search YouTube</h3>
+    <form action="https://www.youtube.com/results">
+        <input type="text" name="search_query">
+        <button>Search YouTube</button>
+    </form>
+    <!-- Interestingly, we don't have to have a button to submit. If we have an input and our form as an action
+    then if we enter  info in the input and hit enter it'll be submitted the same way.-->
+
+    <h2>More Inputs</h2>
+    <form action="/birds">
+        <input type="checkbox" name="agree_tos" id="agree" checked>
+        <label for="agree">I agree to everything</label>
+        <p>
+            <!-- To connect our radios we need to assoiate them by giving them the same exact name. If not
+            they will be separate and you will be able to mark them all at the same time -->
+            <label for="xs">XS:</label>
+            <input type="radio" name="size" id="xs" value="xs">
+            <label for="s">S:</label>
+            <input type="radio" name="size" id="s" value="s">
+            <label for="m">M:</label>
+            <input type="radio" name="size" id="m" value="m">
+            <!-- Remember that a radio button is like a checkbox. The GET request will simply say 'on' or be blank
+            So if we submit all we will see is the name and 'on', but we won't know which button was clicked
+            unless we use another attr which is 'value'. Its not displayed to the user, but its what gets submitted
+            to the server. http://127.0.0.1:3000/birds?agree_tos=on&size=m -->
+        </p>
+        <p>
+            <label for="meal">Please Select an Entree</label>
+            <select name="meal" id="meal">
+                <option value="fish">Fish</option>
+                <option value="veg">Vegetarian</option>
+                <option value="steak" selected>Steak</option>
+            </select>
+            <!-- Note above that the value is sent to the server, not what's in the element -->
+        </p>
+        <p>
+            <label for="cheese">Amount of Cheese:</label>
+            <input type="range" id="cheese" min="1" max="100" value="75" name="cheese_level">
+        </p>
+        <p>
+            <label for="requests">Any Special Requests?</label>
+            <textarea name="" id="requests" cols="30" rows="10" placeholder="Special Requests go here"></textarea>
+        </p>
+        <button>Submit</button>
+        <!-- Please note that neither Select nor Textarea are inputs. All inputs have their attr type, but
+        Select works with the options element and Textarea is its own form element as well with its own attrs -->
+    </form>
+
+    <h2>Validations Demo</h2>
+    <form action="/dummy">
+        <label for="first">Enter First Name</label>
+        <input type="text" name="first" id="first" required>
+        <p>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" minlength="5" maxlength="20" required>
+        </p>
+        <p>
+            <input type="email" required>
+            <input type="url" required>
+        </p>
+
+        <button>Submit</button>
+    </form>
+</body>
+
+</html>

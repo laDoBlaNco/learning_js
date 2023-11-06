@@ -1,0 +1,123 @@
+/* The Box model:
+    Border
+    Width & Height
+    Padding
+    Margin
+    
+    EVERYTHING IN CSS IS A BOX with different properties
+    We can see these boxes on the chrome dev tools. Everything is in a box which has different components or pieces.
+    From inside out:
+    1. The actual content (width and height)
+    2. Padding (between the content and the border
+    3. Border (between the padding and the margin)
+    4. Margin (between the border and everything else outside of that box (element)
+
+
+    WIDTH AND HEIGHT:
+    Sets the width and height of the content area (if we use 'box-sizing' and set it to 'border-box' then they will
+    set  the width and height of the border area. We'll see more about this later. 
+    */
+div {
+    width: 200px;
+    height: 200%;
+    background-color: #e5989b;
+}
+
+h1 {
+    background-color: pink;
+    width: 200px;
+    padding-left: 100px;
+    padding-top: 50px;
+}
+
+/* BORDER:
+   It is the border around the element and it has dozens of properties in which we can do things to its appearance 
+   Note that once you add border the element is no longer 200px wide and tall and we can see this if we compare one with
+   border and one without. Its now 210 (200 + 5 + 5 (for each side) pixels and wide and 210 pixes high.
+   This is where 'border-box' comes into play. With that the width and height of the element will be 200 again, because 
+   our width and height properties are not setting the 'box-area' instead of the 'content-area'. O sea, the content area reduces
+   to absorb the border-width so it all stays within the limit of 200pxs
+
+   Border-radius is used to set the roundness of the corners. We can use pixels, but normally we use %s which are % of the width and height
+
+   */
+
+/* 
+    PADDING can be thought of as just that. When amazon sends a box we have padding usually between our item purchased (content) and the sides
+    of the box (border). We also have various properties we can set in the same way we do borders. So what is padding for, since unlike Amazon
+    it's not protecting our content. Its all about spacing. Space between our content and its border. Maybe its too cramped and we need to space
+    to make it look better. Or maybe we want a bigger button but not necesarily bigger text, etc. 
+    Padding Shorthand: 
+    padding: 10px; (even padding around all 4 sides) Pretty common
+    padding: 5px 10px; (vertical |s horizontal, o sea Top & Bottom | Left & Right) Pretty common
+    padding: 1px 2px 2px; (top | left & right | bottom) almost never used
+    padding: 5px 1px 0 2px; (top | right | bottom | left - clockwise) Pretty common
+
+
+
+
+    */
+#one {
+    background-color: #e5989b;
+    border-width: 5px;
+    border-color: black;
+    border-style: solid;
+    /* box-sizing: border-box */
+}
+
+#two {
+    background-color: #b5838d;
+    border-color: #ffcdb2;
+    border-width: 3px;
+    border-style: dashed;
+    border-left-width: 8px;
+    padding-right: 50px;
+}
+
+#three {
+    background-color: #6d6875;
+    /* we typically use the border shorthand 'border: width style color'
+    This is a pattern we'll see in other properties as well as we go on */
+    border: 4px solid black;
+    /* Using the cascade we can then add alterations for specific sides if needed */
+    border-left-style: dotted;
+    border-radius: 50%;
+}
+
+button {
+    /* padding: 20px; */
+    /* padding: 0px 20px */
+    padding: 10px 20px 30px 40px;
+}
+
+/* MARGIN
+Is the space outside of the border. Very similar to padding but its on the outside of the border and padding is on the inside
+Most of the syntax and properties are as expected. On another course margin was mentioned as being used to 'move' elements around. 
+You can think of it as pushing your elements around the page if needed, while padding is to make your element bigger, etc.
+Remember that your page starts on xy 0,0. So all pushing or moving of elements with margin pushes away from that point. So if you put margin-bottom
+but you are already packed to the top-left (0,0) you will actually be pushing whatever is below your element down and not pushing your element up. 
+Also note that we can't intuitively move items around with margin when they are nested. Such as below we can move our ':)' to the right
+But not up or down. For this we need a new property 'display' in the other stylesheet
+*/
+h1 {
+    /* margin-bottom: 0; */
+    margin: 0;
+}
+
+body {
+    margin: 0;
+}
+
+#one {
+    margin-left: 50px;
+    margin-bottom: 100px;
+}
+
+#two {
+    margin: 200px;
+}
+
+span {
+    margin-left: 30px;
+    margin-top: 30px;
+}
