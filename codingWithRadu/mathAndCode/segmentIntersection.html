@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Segment Intersection Formula</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Segment Intersection Formula Explained</h1>
+  <canvas id="myCanvas"></canvas>
+
+  <script>
+    /**
+     * Segment intersections are very important with dealing with collision systems such as
+     * with the self-driving car that we'll do later, and probably in my no-black box course I'll 
+     * take with ML. The below set up is just to understand the formula behind calculating the
+     * segment intersection points. Nothing new so far, simply using canvas to draw our our 
+     * examples to work with. 
+     * 
+     * 
+     */
+    myCanvas.width = window.innerWidth;
+    myCanvas.height = window.innerHeight;
+
+    const A = { x: 200, y: 150 };
+    const B = { x: 150, y: 250 };
+    const C = { x: 50, y: 100 };
+    const D = { x: 250, y: 200 };
+
+
+    const ctx = document.getElementById('myCanvas').getContext('2d');
+
+    let angle = 0;
+    const mouse = { x: 0, y: 0 };
+    document.onmousemove = (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    }
+
+
+    animate();
+
+    function animate() {
+
+      const radius = 50;
+      A.x = mouse.x + Math.cos(angle) * radius;
+      A.y = mouse.y - Math.sin(angle) * radius;
+      B.x = mouse.x - Math.cos(angle) * radius;
+      B.y = mouse.y + Math.sin(angle) * radius;
+      angle += 0.02;
+
+      ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+      ctx.beginPath();
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(B.x, B.y);
+      ctx.moveTo(C.x, C.y);
+      ctx.lineTo(D.x, D.y);
+      ctx.stroke();
+
+
+
+
+      drawDot(A, 'A');
+      drawDot(B, 'B');
+      drawDot(C, 'C');
+      drawDot(D, 'D');
+
+      // let's first get the middle of a segment with linear interpolation that we've studied before
+      // Remember that linear interpolation is just getting distances or marking distances between two
+      // points, normally used to  get evenly distanced portions between points or in this case find the  exact
+      // middle
+      // const t = 0.7;
+      // const M = {
+      //   x: lerp(A.x, B.x, t),
+      //   y: lerp(A.y, B.y, t),
+      // }
+      // const N = {
+      //   x: lerp(C.x, D.x, t),
+      //   y: lerp(C.y, D.y, t),
+      // }
+
+      // drawDot(M, 'M', t < 0 || t > 1);
+      // drawDot(N, 'N', t < 0 || t > 1);
+
+      const I = getIntersection(A, B, C, D);
+      if (I) {
+        drawDot(I, "I");
+      }
+
+      // ctx.beginPath();
+      // ctx.rect(myCanvas.width / 2, 0, I.bottom / 100, 10);
+      // ctx.fill();
+
+      // t += 0.005;
+      requestAnimationFrame(animate);
+
+    }
+
+    function getIntersection(A, B, C, D) {
+      /**
+       * This must be true to have a true intersection. Note that the same t won't work, so we need to have
+       * t and u
+       * Ix = Ax+(Bx-Ax)t = Cx+(Dx-Cx)u
+       * Iy = Ay+(By-Ay)t = Cy+(Dy-Cy)u 
+       * 
+       * So we can go back to highschool algebra and determine what u is in terms of t the old fashioned way
+       * Ax+(Bx-Ax)t = Cx+(Dx-Cx)u | first we subtract Cx from this side
+       * (Ax-Cx)+(Bx-Ax)t = (Dx-Cx)u | we could then divide to just get 'u' but if its a zero then we'd get division by zero error
+       * 
+       * let's do the same for y
+       * Ay+(By-Ay)t = Cy+(Dy-Cy)u | first we subtract Cy from this side
+       * (Ay-Cy)+(By-Ay)t = (Dy-Cy)u | we could then divide to just get 'u' but if its a zero then we'd get division by zero error
+       * but this time we will do a trick which is multiplying by (Dx-Cx)
+       * (Ay-Cy)+(By-Ay)t = (Dy-Cy)u * (Dx-Cx) 
+       * 
+       */
+      const tTop = (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x);
+      const uTop = (C.y - A.y) * (A.x - B.x) - (C.x - A.x) * (A.y - B.y);
+      const bottom = (D.y - C.y) * (B.x - A.x) - (D.x - C.x) * (B.y - A.y);
+
+      if (bottom != 0) {
+        const t = tTop / bottom;
+        const u = uTop / bottom;
+        if (t >= 0 && t <= 1 && u >= 0 && u <= 1) {
+          // console.log(bottom);
+          return {
+            x: lerp(A.x, B.x, t),
+            y: lerp(A.y, B.y, t),
+            offset: t,
+          }
+        }
+      }
+      return null;
+    }
+
+    function lerp(A, B, t) {
+      return A + (B - A) * t;
+    }
+
+    // as normal we put our code in a function so we can run it multiple times
+    function drawDot(point, label, isRed) {
+      ctx.beginPath();
+      ctx.fillStyle = isRed ? 'red' : 'white';
+      ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = 'black';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = 'bold 14px Arial';
+      ctx.fillText(label, point.x, point.y);
+    }
+  </script>
+</body>
+
+</html>

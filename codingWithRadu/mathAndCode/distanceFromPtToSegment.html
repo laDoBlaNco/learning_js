@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Distance From Point to Segment</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    canvas {
+      margin: 5px;
+      background-color: black;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="myCanvas" width=600 height="600"></canvas>
+
+  <script>
+    const ctx = document.getElementById('myCanvas').getContext('2d');
+
+    const A = { x: 100, y: 200 };
+    const B = { x: 400, y: 300 };
+    const M = { x: 250, y: 250 };
+
+    myCanvas.addEventListener('mousemove', (e) => {
+      M.x = e.offsetX;
+      M.y = e.offsetY;
+      redrawAll();
+    })
+
+    myCanvas.addEventListener('click', (e) => {
+      A.x = e.offsetX;
+      A.y = e.offsetY;
+      redrawAll();
+    })
+    myCanvas.addEventListener('contextmenu', (e) => {
+      B.x = e.offsetX;
+      B.y = e.offsetY;
+      redrawAll();
+      e.preventDefault();
+    })
+
+    redrawAll();
+
+    // Drawing functions from 2dVector, Trigonometry and Pythag Videos
+    function clear() {
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    }
+
+    function redrawAll() {
+      clear();
+      drawDot(A, 'A');
+      drawDot(B, 'B');
+      drawDot(M, 'M');
+      drawSegment(A, B);
+      // drawArrow(A);
+      // drawArrow(B);
+      // drawArrow(M);
+      const res = distanceFromPointToSegment(M, A, B);
+      drawText(res.value);
+      drawArrow(res.point, M);
+
+
+
+
+      function distanceFromPointToSegment(M, A, B) {
+        const { P, t } = projectPointToSegment(M, A, B);
+        if (t > 0 && t < 1) {
+          return { point: P, value: distance(M, P) }
+        } else {
+          const distToA = distance(M, A);
+          const distToB = distance(M, B);
+          if (distToA < distToB) {
+            // drawText(distToA);
+            // drawArrow(A, M);
+            return { point: A, value: distToA };
+          } else {
+            // drawText(distToB);
+            // drawArrow(B, M);
+            return { point: B, value: distToB };
+          }
+        }
+
+      }
+
+    }
+
+    function projectPointToSegment(M, A, B) {
+      const AB = subtract(B, A);
+      // const tail = { x: 100, y: 100 };
+      // drawArrow(add(AB, A), A);
+
+      const AM = subtract(M, A);
+      // drawArrow(add(AM, A), A);
+
+      const nAB = normalize(AB);
+      // const nAM = normalize(AM);
+      // drawArrow(add(nAM, A), A);
+
+      const t = dot(AM, nAB) / distance(A, B);
+      const scaler = dot(AM, nAB);
+      // drawText(t);
+
+      // const P = lerp2d(A, B, t);
+      const P = add(A, scale(nAB, scaler));
+      // drawDot(P, 'P');
+
+      return { P, t };
+    }
+
+    function drawArrow(tip, tail = { x: 0, y: 0 }, color = 'white', size = 20) {
+      ctx.save();
+      const { dir, mag } = toPolar(subtract(tip, tail));
+      const v1 = { dir: dir + Math.PI * 0.8, mag: size / 2 };
+      const p1 = toXY(v1);
+      const t1 = add(p1, tip);
+      const v2 = { dir: dir - Math.PI * 0.8, mag: size / 2 };
+      const p2 = toXY(v2);
+      const t2 = add(p2, tip);
+
+      ctx.beginPath();
+      ctx.moveTo(tail.x, tail.y);
+      ctx.lineTo(tip.x, tip.y);
+      ctx.strokeStyle = color;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(tip.x, tip.y);
+      ctx.lineTo(t1.x, t1.y);
+      ctx.lineTo(t2.x, t2.y);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawDot(pos, label) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.fillStyle = 'white';
+      ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.font = '20px Arial';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, pos.x - 10, pos.y + 6);
+      ctx.restore();
+    }
+
+    function drawSegment(A, B) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.strokeStyle = 'yellow';
+      ctx.lineWidth = 2;
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(B.x, B.y);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawText(text, { x = 10, y = 20 } = {}) {
+      ctx.save();
+      ctx.textBasline = 'hanging';
+      ctx.textAlign = 'left';
+      ctx.fillStyle = 'white';
+      ctx.font = '20px Arial';
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    }
+
+
+    // 2d Vectors - math.js
+    function scale(p, scalar) {
+      return { x: p.x * scalar, y: p.y * scalar };
+    }
+    function add(p1, p2) {
+      return { x: p1.x + p2.x, y: p1.y + p2.y };
+    }
+    function subtract(p1, p2) {
+      return { x: p1.x - p2.x, y: p1.y - p2.y };
+    }
+    function dot(p1, p2) {
+      return p1.x * p2.x + p1.y * p2.y;
+    }
+    function normalize(p) {
+      return scale(p, 1 / magnitude(p));
+    }
+    function toPolar({ x, y }) {
+      return { dir: direction({ x, y }), mag: magnitude({ x, y }) };
+    }
+    function toXY({ mag, dir }) {
+      return { x: Math.cos(dir) * mag, y: Math.sin(dir) * mag };
+    }
+    function direction({ x, y }) {
+      return Math.atan2(y, x);
+    }
+    function magnitude({ x, y }) {
+      return Math.hypot(x, y);
+    }
+
+    // Pythagorean Theorem Video
+    function distance(p1, p2) {
+      return Math.hypot(p1.x - p2.x, p1.y - p2.y);
+    }
+
+    // Linear Interpolation Video
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+    function lerp2d(A, B, t) {
+      return { x: lerp(A.x, B.x, t), y: lerp(A.y, B.y, t) };
+    }
+
+  </script>
+
+</body>
+
+</html>

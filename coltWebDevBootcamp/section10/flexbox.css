@@ -1,0 +1,57 @@
+/* 
+The Basics:
+Flex-box is a one-dimensional layout method for laying out items in rows
+and columns. 
+Its new(ish) - its a recent addition to CSS, included to address common layout frustrations
+Why? It allows us to distribute space dynamically across elements of an unknown size, hence  the term
+"flex", within a "container". Creating flexible layouts. 
+
+Terminology: in Flexbox when we turn it on there are two axis. 
+Main axis goes from left to right. 
+
+Flexbox has about 8-10 properties that work together. they are: 
+
+
+display:flex - basically turning on flexbox
+flex-direction:row - with this we can change our main axis direction
+justify-content - determines how the elements are distributed across the main access
+                  so its behavior is total dependent on the flex-direction
+flex-wrap - uses 'wrap' and 'wrap-reverse' and just determins if the elements wrap when they hit the
+            edges, or if they are squashed to fit. wrap and wrap-reverse take into consideration the 'cross-axis'
+
+*/
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+#container {
+  background-color: #003049;
+  width: 90%;
+  height: 500px;
+  margin: 0 auto;
+  border: 5px solid #003049;
+  display: flex;
+  flex-direction: row;
+  /* flex-direction: row-reverse; */
+  /* flex-direction: column; */
+  /* flex-direction: column-reverse; */
+  /* flex-start is not always left to right, depending on the main axis flex-direction */
+  /* justify-content: flex-start; */
+  /* justify-content: flex-end; */
+  /* justify-content: center; */
+  /* space-between, space-around, space-evenly distribute the space between the elements and around, respectively */
+  /* justify-content: space-between; */
+  /* justify-content: space-around; */
+  /* justify-content: space-evenly; */
+  /* flex-wrap: wrap; */
+  flex-wrap: wrap-reverse;
+}
+
+#container div {
+  width: 600px;
+  height: 200px;
+}

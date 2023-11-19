@@ -7,15 +7,180 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pythagorean Theorem: Proof, Applications and JS</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: lightcyan;
+    }
+
+    canvas {
+      position: absolute;
+    }
+  </style>
+
 </head>
 
 <body>
+
+  <canvas id="myCanvas"></canvas>
   <script>
+    /**
+     * The pythagorean theorem is probably one of the most useful things in the world. We use it to make
+     * games, location  based systems, augmented reality apps, machine learning projects, etc. 
+     * 
+     * So what is it:
+     * It applies to right triangles and states that (a**2)+(b**2)=(c**2), where a and b are the lengths of the
+     * sides of the triangle that make up the 90 degree angle. C is the hypotenuse of the right-triangle. This
+     * statement is true for any right-triangle. There are over 300 proofs for this theorem.
+     * 
+     * So how can we use it. One very common way is in calculating the distance between 2 points if we know
+     * their coordinates. 
+     */
+
+    const birdImage = new Image();
+    const pigImage = new Image();
+    birdImage.src = 'https://radufromfinland.com/projects/pythagoras/assets/bird.png';
+    pigImage.src = 'https://radufromfinland.com/projects/pythagoras/assets/pig.png'
+    const kiss = new Audio('https://radufromfinland.com/projects/pythagoras/assets/kiss.mp3');
+
+    const canvas = document.getElementById('myCanvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let points = [];
+    let selectedPoint = null;
+    let oldDistance = null;
+
+    canvas.addEventListener('mousedown', doMouseDown);
+    canvas.addEventListener('mousemove', doMouseMove);
+    canvas.addEventListener('mouseup', doMouseUp);
+
+    let min = Math.min(canvas.width, canvas.height);
+    class Point {
+      constructor(x, y, image) {
+        this.x = x;
+        this.y = y;
+        this.image = image;
+      }
+
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.x - 21, this.y - 21, 42, 42);
+      }
+    }
+    points.push(new Point(
+      canvas.width * 0.5 + (0.1 - 0.5) * min * 0.5,
+      canvas.height * 0.5 + (0.3 - 0.5) * min * 0.5,
+      birdImage
+    ));
+    points.push(new Point(
+      canvas.width * 0.5 + (0.9 - 0.5) * min * 0.5,
+      canvas.height * 0.5 + (0.7 - 0.5) * min * 0.5,
+      pigImage
+    ));
+    animate();
+
+
+    function doMouseDown(e) {
+      selectedPoint = getNearest({ x: e.x, y: e.y }, points);
+      selectedPoint.x = e.x;
+      selectedPoint.y = e.y;
+    }
+
+    function doMouseMove(e) {
+      if (selectedPoint !== null) {
+        selectedPoint.x = e.x;
+        selectedPoint.y = e.y;
+      }
+    }
+
+    function doMouseUp(e) {
+      selectedPoint = null;
+    }
+
+    function getNearest(needle, haystack) {
+      let minDist = Number.MAX_VALUE;
+      let closest = null;
+      for (let i = 0; i < haystack.length; i++) {
+        let dist = distance(needle, haystack[i]);
+        if (dist < minDist) {
+          minDist = dist;
+          closest = haystack[i];
+        }
+      }
+      return closest;
+    }
+
+    // Let's create the function distance in JS. We get the length of a & b based on the coords of the 2 points
+    // and then use the pythag to get the (c**2) side (hypotenuse), then return the sqrt of that.
     function distance(p1, p2) {
       let a = p1.x - p2.x;
       let b = p1.y - p2.y;
-      let c = Math.sqrt(a * a + b * b);
+      let c = Math.hypot(a, b);
       return c;
+    }
+
+    function animate() {
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      let c = distance(points[0], points[1]);
+      if (c <= 42) {
+        let avg = average([points[0], points[1]]);
+        drawHeart(avg, 42 * 2, ctx);
+        if (oldDistance === null || oldDistance > 42) {
+          kiss.play();
+        }
+      }
+      oldDistance = c;
+
+      drawLine(points, ctx);
+      points[0].draw(ctx);
+      points[1].draw(ctx);
+
+      ctx.beginPath();
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'center';
+      ctx.font = 21 + 'px Arial';
+      ctx.fillText(c.toFixed(1) + " px", canvas.width / 2, canvas.height * 0.1);
+
+      window.requestAnimationFrame(animate);
+    }
+
+    function drawLine(points, ctx) {
+      ctx.beginPath();
+      ctx.setLineDash([5, 5]);
+      ctx.lineWidth = 3;
+      ctx.moveTo(points[0].x, points[0].y);
+      ctx.lineTo(points[1].x, points[1].y);
+      ctx.stroke();
+      let c = distance(points[0], points[1]);
+    }
+
+    function average(arr) {
+      let avg = { x: 0, y: 0 };
+      for (let i = 0; i < arr.length; i++) {
+        avg.x += arr[i].x;
+        avg.y += arr[i].y;
+      }
+      avg.x /= arr.length;
+      avg.y /= arr.length;
+      return avg;
+    }
+
+
+    function drawHeart(loc, rad, ctx) {
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      ctx.fillStyle = 'lightblue';
+      ctx.moveTo(loc.x, loc.y + rad * 0.6);
+      ctx.bezierCurveTo(loc.x - rad, loc.y + rad * 0.5, loc.x - rad, loc.y - rad, loc.x, loc.y - rad * 0.5);
+      ctx.moveTo(loc.x, loc.y + rad * 0.6);
+      ctx.bezierCurveTo(loc.x + rad, loc.y + rad * 0.5, loc.x + rad, loc.y - rad, loc.x, loc.y - rad * 0.5);
+      ctx.fill();
     }
 
 

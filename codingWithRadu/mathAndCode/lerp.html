@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Linear Interpolation</title>
+    <style>
+      body{
+        margin:0;
+        padding:0;
+        overflow:hidden;
+      }
+    </style>
+    
+  </head>
+  
+  
+  <body>
+    <canvas id='myCanvas'></canvas>
+    <script>
+// radu didn't want to import the JS, but I do. 
+myCanvas.width=window.innerWidth;
+myCanvas.height=window.innerHeight;
+
+
+const A={x:100,y:300};
+const B={x:400,y:100};
+const orange={r:230,g:150,b:0}
+const blue={r:0,g:70,b:160} 
+const lowFreq=200;
+const highFreq=600;
+
+const ctx=myCanvas.getContext('2d');
+
+let osc=null;
+let audioCtx=null;
+myCanvas.onclick = function(){
+  console.log('clicked');
+  if(audioCtx==null){
+    audioCtx=new(
+      AudioContext ||
+        webkitAudioContext ||
+        window.webkitAudioContext
+    )();
+    osc=audioCtx.createOscillator();
+    osc.frequency.value=200;
+    osc.start();
+
+    const node=audioCtx.createGain();
+    node.gain.value=0.3;
+
+    osc.connect(node);
+    node.connect(audioCtx.destination);
+  }
+}
+
+animate();
+
+function animate(){
+  ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+
+  const sec=new Date().getTime()/1000;
+  // console.log(sec);
+  // const t=sec-Math.floor(sec);
+  const t=(Math.sin(sec*Math.PI)+1)/2 
+  
+  const C=vLerp(A,B,t);
+  drawDot(C,"");
+
+  drawDot(A,"A");
+  drawDot(B,'B');
+
+  // const {r,g,b}=orange;
+  const{r,g,b}=vLerp(orange,blue,t);
+  myCanvas.style.backgroundColor=`rgb(${r},${g},${b})`;
+
+  if(osc){
+    osc.frequency.value=lerp(lowFreq,highFreq,t);
+  }
+
+  ctx.strokeStyle='white';
+  ctx.textAlign='center';
+  ctx.textBaseline='top';
+  ctx.font='bold 40px Arial';
+  ctx.setLineDash([lerp(3,130,t),130]);
+  ctx.strokeText("Click for sound",myCanvas.width/2,10);
+  ctx.setLineDash([]);
+
+  requestAnimationFrame(animate);
+  
+}
+
+
+// const t=1.2; // we can even use neg values if we want and that would be 
+// extrapolation, many "outside of two positions." Values above 1 would extrapolate
+// us on the other side
+// const C={
+//   // x:(A.x+B.x)/2,
+//   // x:A.x+(B.x-A.x)*Math.random(), // this is the linear interpolation equation It allows
+//   x:lerp(A.x,B.x,t),
+//   // us to remove the redundancy and its clear as to what we are doing.
+//   // linear because we are on a line and interpolation because we are working
+//   // between two points.
+//   y:200,
+// }
+// drawDot(C,"C");
+
+// Getting multiple equally spaced things.
+// const n=10;
+// for(let i=0;i<=n-1;i++){
+//   const t=i/(n-1);
+//   // const C={
+//   //   x:lerp(A.x,B.x,t),
+//   //   y:lerp(A.y,B.y,t),
+//   // };
+//   const C=vLerp(A,B,t);
+//   drawDot(C,'.'+i);
+// }
+
+// just to redraw a,b over the c's
+drawDot(A,'A');
+drawDot(B,'B');
+
+
+function drawDot(pos,label){
+  ctx.beginPath();
+  ctx.fillStyle = 'white';
+  ctx.strokeStyle='black';
+  ctx.arc(pos.x,pos.y,10,0,Math.PI*2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle='black';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.font='bold 14px Arial';
+  ctx.fillText(label,pos.x,pos.y);
+}
+
+// Radu's advice is that if we are going to be using linear interpolation a lot
+// its best to put it into its own function 
+function lerp(a,b,t){
+  return a+(b-a)*t;
+}
+
+// since we now have a  more complex formula for vector interpolation, we'll 
+// create another function for this one as well 
+function vLerp(a,b,t){
+  // return{
+  //   x:lerp(a.x,b.x,t),
+  //   y:lerp(a.y,b.y,t),
+  // }
+  const res={};
+  for(let attr in a){
+    res[attr]=lerp(a[attr],b[attr],t); // no longer just x and y but iterate
+    // through them all. So color is being seen as a 3 dimensional point 
+  }
+  return res;  
+}
+
+/*
+
+We can use interpolation for a lot of things, but for our case a good one is
+to get evenly spaced out things. This what I'm doing in the for loop
+
+We can also use interpolation for animation. In fact I think this is normally 
+where I've seen the word interpolation when it has to do with drawing and programming
+games, etc. 
+
+Let's now try to interpolate something else like colors as we've added more 
+consts above. We used the sin function to interpolate or transition from one 
+color to another. This is how transitions actually work in CSS 
+
+Now can we do the same for sound? 
+
+*/
+    </script>
+  </body>
+</html>
