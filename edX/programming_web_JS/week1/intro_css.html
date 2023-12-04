@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to CSS</title>
+  <!-- Internal CSS:
+  Advantages: separate content and presentation. Easy to use, in particular if you want to apply the same
+              style to all tags of a certain element type. Its  easier to do it with internal CSS than inline CSS
+              Its also good if we have limited amounts of CSS in the page.
+ Disadvantages: Hard to manage for large, complex pages and we can't reuse for other pages without copying and pasting 
+                it in every page header. 
+            -->
+  <style>
+    #internal {
+      color: blue;
+      text-transform: capitalize;
+    }
+  </style>
+  <!-- This is how we link external CSS -->
+  <link rel="stylesheet" href="move-styles.css">
+</head>
+
+<body>
+  <!-- 
+When using CSS we can put it in our document in 3 ways:
+inline - means we add it as an attribute directly to the element tag
+internal - means we embed a 'style' tag in our html 'head' tag and use the CSS there
+external - meaning that we create a separate '.css' file and using a 'link' tag in our header to connect the files
+
+
+   -->
+
+  <!-- Inline: 
+  Inline CSS is easy to use and good and quick for one-off situations. It is hard to manage though for
+  large, complex pages, and we are mixing content and presentation which should be avoided.-->
+  <h1 style="color:red;text-transform: capitalize;">Here are some memorable quotes from movies!</h1>
+  <h1 id="internal">Here are some memorable quotes from movies!</h1>
+  <h1 id="external">Here are some memorable quotes from movies!</h1>
+</body>
+
+</html>

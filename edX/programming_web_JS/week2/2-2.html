@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.2 JavaScript Variables </title>
+</head>
+
+<body>
+
+  <script>
+    /**
+     * JavaScript Basics
+     * Like many other programming languages, JS includes:
+     *  - variables, arrays, and objects
+     *  - loops and conditional statements
+     *  - functions
+     *
+     * Even if we know Java, remember that JavaScript isn't related. There are some big differences:
+     *  - defining functions and objects
+     *  - interacting with HTML
+     */
+
+    //  Declaring a variable with E5 (EcmaScript 5) which is the old JS. Most folks use E6 and after now with let and const
+    //  - the basic syntax for declaring any JavaScript variable is 'var variableName = '
+    var age = 22;
+    var name = 'Jane Doe';
+    var isMale = false;
+
+    // Viewing a variable's value (1)
+    // Using script tag in HTML or an external .js file, document.write(var) to display the value directly in the HTML
+    document.write(age);
+    // This way is of course discouraged as we are mixing functionality with structure in HTML
+
+    // Viewing a varible's value (2)
+    // We can use console.log(var) to print a variable's value in the browser's JS console.
+    console.log(age);
+
+    // viewing a variable's value (3)
+    // using the alert(var) function to create a popup with the var's value that appears at the top of the browswer
+    // alert(age);
+
+    // Changing a variables type
+    // - The type of each var doesn't need to specified and can be changed at any time in JS
+    var id = 33.2; // first its a real or floating point
+    id = 'secret' // not its a string
+
+    // In JS there are 5 PRIMITIVE types: Number, String, Boolean, Null, Undefined
+    /**
+     * Numbers: 
+     *  - All JS numbers are sorted using floating-point notation
+     *    - Example integer 5 is stored internally as 0.5e1
+     *  - +infinity represants all numbers greater than the constant Number.MAX_VALUE (around 10**308)
+     *  - -infinity represents all numbers less than Number.MIN_VALUE (around 10**-324)
+     *  - NaN represents any non-number value
+     *    - Number('tree') would return 'NaN' 
+     * 
+     * Number Operations:
+     *  - Basic arithmetic(+,-,*,/,%) can be used on JS numbers
+     *  - Precedence will follow MDAS unless parenthses are used
+     *  - ++ and -- can be used increment/decrement JS numbers
+     */
+    var a = 4;
+    a++; console.log(a)
+    var c = a - 3; console.log(c);
+    var d = c + 3 * a; console.log(d);
+    var e = (c + 3) * a; console.log(e);
+
+    /**
+     * Strings:
+     *  - JS strings are series of  16-bit unsigned integers, each integer representing a char
+     *  - Convention is to use single quotes for strings unless single quotes exist within the string.
+     *    - 'I am a dolphin' vs "I'm a dolphin" 
+     *  - Escape characters use backslash, which is pretty normal '\n \t \\'
+     *  - All JavaScript strings are immutable:
+     *    - Any manipulation results in a new string. 
+     * 
+     * Common String Functions:
+     * + or .concat(otherString) can be used to concat strings
+     * .toUpperCase and .toLowerCase to change the case. Remember that its a new string being returned
+     *  and not mutating the original
+     * .length gets the length of a string
+     */
+
+    var firstName = 'John';
+    var lastName = 'Doe';
+
+    var fullName = firstName.concat(' ', lastName);
+    console.log(fullName);
+    var greeting = 'HELLO, ' + fullName;
+    console.log(greeting);
+    console.log(greeting.toUpperCase());
+    console.log(greeting.toLowerCase());
+    console.log(greeting.length);
+
+    /**
+     * Booleans:
+     *  - Logical values that an only be true or false
+     *  - Any value can be used as a boolean in JS
+     *    - 'Falsy' values: null, undefined, 0, NaN, and ''
+     *    - 'Truthy' values: just about everything else 
+     *  - Any variable type can become a boolean when used with logical operators 
+     *
+     * Null:
+     *  - a value that can be assigned to variables to represent 'no value'
+     * Undefined:
+     *  - a variable was declared but doesn't have a value assigned as of yet. 
+     *    - if you try to use var that doesn't exist, under the hood that var is declared, but with a value
+     *      of undefined. 
+     */
+
+
+  </script>
+</body>
+
+</html>

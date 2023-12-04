@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Regular Expressions</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * Strings and Characters:
+     * -- 
+     * -- 
+     * 
+     */
+    //  We can get the  number of characters in a string using its length property
+    //  We can access each character by its 0-based index with charAt or array notation
+    var name = 'toucan';
+    console.log(name.length);
+    console.log(name.charAt(3));
+    console.log(name[3]);
+
+    // Remember! JS strings are immuatable so we can't change them once created.
+    var animal = 'cat';
+    animal[0] = 'r';
+    console.log(animal);
+
+    // What we can do is return a new string and place it in a new varible or the same variable.
+    var friend = 'turtle';
+    console.log(friend.toUpperCase());
+    console.log(friend);
+
+    var message = ' hello everyone  ';
+    message = message.trim(); // return a new string to replace the old. We do this a lot in Go as well
+    console.log(message);
+
+    // We can search or determine whether a string starts with, ends with, or includes other strings as well. All returning
+    // booleans (true or false) 
+    var msg = 'programming in JavaScript is fun';
+    console.log(msg.startsWith('programming'), msg.startsWith('PROGRAMMING'));
+    console.log(msg.endsWith('is fun'));
+    console.log(msg.includes('JavaScript'));
+
+    // We can also get the starting index of a contained substring or  -1 if not found.
+    var title = 'the title  of my book';
+    var start = title.search('title');
+    console.log(start);
+    start = title.search('banana');
+    console.log(start);
+
+    /**
+     * Regular Expressions:
+     * -- A regular expression is a pattern of characters (not a string itself, but a specification of a pattern)
+     * -- A string matches a regular expression if it adheres to the same pattern
+     * -- Example: 'consists of exactly three digits (0-9)'
+     *  -- '123' matches
+     *  -- 'abc' does not match
+     *  -- '12' does not match
+     *  -- '12345' does not match, etc
+     * 
+     * Simple Regular Expression Matching
+     * -- We can pass a reglar expression to the string's search function to see if it matches the pattern
+     * -- In general, it is considered a match if ANY part of the string matches the regexp
+     * 
+     */
+    var status = 'I am working VERY hard';
+    console.log(status.search(/VERY/));
+    console.log(status.search(/very/)); // this one is case sensitive
+    console.log(status.search(/very/i)); // this 'i' makes it ignore case or case insensitive
+
+    // the regular expression is an object and its has a test method which we will use a lot here
+    console.log(/script/.test('javascript is so much fun!')); // so we can test our regexps with JS. Love it
+
+    // But what special things can we do. We can also specify multiple valid chars that want to consider for matching.
+    var numbers = '5 8 2 5 7 6';
+    console.log(numbers.search(/[012]/)); // or with test
+    console.log(/[012]/.test(numbers));
+
+    // we an also specify ranges of chars or special chars
+    var password = 'password4real';
+    console.log(password.search(/[a-z]/));
+    console.log(password.search(/\d/));
+
+    // we can also combine these special ranges to do more powerful searches
+    var code = 'abc123d4e5';
+    console.log(code.search(/[0-9][a-z][0-9]/));
+    // or NOT in a range
+    var chars = 'abc123K456';
+    console.log(chars.search(/[^0-9a-z]/));
+
+    // we also have what are known as quantifiers which help us customize the regexp commands. For example with '?' we can look
+    // for an optional single occurence of something
+    console.log(/[a-z][0-9]?[a-z]/.test('a1b')); // true
+    console.log(/[a-z][0-9]?[a-z]/.test('abc')); // true
+    console.log(/[a-z][0-9]?[a-z]/.test('a123b')); // false because there are 3 digits and we asked for none or 1
+
+    // So with ? meaning 0 or 1, * means 0 or more so optional single occurence  vs optional multiple occurences
+    console.log(/[a-z][0-9]*[a-z]/.test('a123b'));
+
+    // startsWith and endsWith Matches with regexp
+    // Here we can see if a string contains a pattern, but as well if it starts or ends with that pattern
+    // before we saw ^ in the brackets, when we see it outside the brackets its 'startsWith'
+    console.log(/^[a-z][0-9]/.test('a1b'));
+    console.log(/^[a-z][0-9]/.test('ab12'));
+    // and $ after the brackets for 'endsWith'
+    console.log(/[a-z][a-z]$/.test('123abc'));
+    console.log(/[a-z][a-z]$/.test('123abc456'));
+
+    // this lets us detect exact matches using both startsWith and endsWith
+    console.log(/^[a-z][0-9][a-z]$/.test('a1b'));
+    console.log(/^[a-z][0-9][a-z]$/.test('a1b2c'));
+    console.log(/^[a-z][0-9a-z]*[a-z]$/.test('a1b2c'));
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </script>
+</body>
+
+</html>

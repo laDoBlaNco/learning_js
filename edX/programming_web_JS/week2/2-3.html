@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Arrays and Objects</title>
+</head>
+
+<body>
+  <script>
+    // Arrays;
+    //    - Arrays are used to store a list of values in a single variable
+    //    - Values can be of any type, and ar split with commas and wrapped in square brackets
+    var myArray = ['cars', 12, false];
+    var age = myArray[1];
+    console.log(age);
+    myArray[2] = true;
+    console.log(myArray[2]);
+    console.log(myArray.length);
+    // good to note that if we try to get an item from an array thats out of bound (negative or higher than the length) then we 
+    // get 'undefined' rather than an out of bounds error as we would in most langs.
+    console.log(myArray[-9]);
+    console.log(myArray[4]);
+
+    // Another quirk is when adding things to arrays. If you add something out of bounds, it will be added and accessible
+    // even if it doesn't fall in the correct series
+    var a = ['cat', 'dog', 'banana'];
+    a[4] = 'panda';
+    console.log(a[4]);
+    console.log(a[3]);
+    a[-5] = 'elephant';
+    console.log(a[-5]);
+    console.log(a);
+    // the main rule being if the index is >= arrayVar.length, it gets added
+    // if its index < 0 then a special mapping is created and placed as an element in the array as well.
+
+    // so to add or remove from an array we use .push/.unshift or .pop/.shift
+    // The names shift and unshift intuitively tell us what's happening wth the underlying array from a Big O perspective. when dealing with
+    // things on the front of the array we need to shift ever single element to the right or left. 
+    var myArray = ['car', 'bike'];
+    console.log(myArray);
+    myArray.push('scooter');
+    console.log(myArray);
+    myArray.unshift('train');
+    console.log(myArray);
+
+    var vehicle = myArray.pop()
+    console.log(vehicle);
+    console.log(myArray);
+    vehicle = myArray.shift();
+    console.log(vehicle);
+    console.log(myArray);
+
+
+    // Objects:
+    // JavaScript objects are used to store key-value pairs
+    // Values can be of any type, including arrays or objects themselves.
+    // We consider the values of an abject as properties and use both array and dot notation
+    var person = {
+      name: 'John Doe',
+      age: 25,
+      isMale: true,
+      personality: ['patient', 'loyal', 'happy'],
+      company: { name: 'edX', id: 2984 },
+    }
+    // though it looks like it, we keep in mind that this isn't a Class. Its an object. 
+    console.log(person.age);
+    console.log(person['company'].id);
+
+    // as opposed to normal OOP where you can't really add properties to a class after its  init'd
+    // these are objects, so we can do so, with no issues
+    var pet = {
+      name: 'Cooper',
+      type: 'dog',
+    }
+    console.log(pet.age);
+    pet.age = 11;
+    console.log(pet.age);
+    pet['status'] = 'good boy';
+    console.log(pet.status);
+    console.log(pet);
+
+
+
+  </script>
+</body>
+
+</html>

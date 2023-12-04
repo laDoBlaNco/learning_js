@@ -18,6 +18,9 @@ justify-content - determines how the elements are distributed across the main ac
                   so its behavior is total dependent on the flex-direction
 flex-wrap - uses 'wrap' and 'wrap-reverse' and just determins if the elements wrap when they hit the
             edges, or if they are squashed to fit. wrap and wrap-reverse take into consideration the 'cross-axis'
+align-items - very similar to justify-content using the main and cross axis to determine where we start and end, etc
+              While justify-content distributes space along the main axis, align items distributes space along the cross
+              axis. 
 
 */
 body {
@@ -48,10 +51,25 @@ h1 {
   /* justify-content: space-around; */
   /* justify-content: space-evenly; */
   /* flex-wrap: wrap; */
-  flex-wrap: wrap-reverse;
+  /* flex-wrap: wrap-reverse; */
+  justify-content: center;
+  /* Now to distribute space on the cross-axis (whether its vertical or horizontal, we use align-items */
+  /* align-items: flex-end; */
+  /* align-items: flex-start; */
+  /* align-items: center; */
+  /* baseline will use the text to align our elements instead of the actual elements. This can be seen when
+  we have text of different fonts. */
+  /* align-items: baseline; */
+
+  /* and when not working in a row, meaning the main and cross axis are different?
+  Again it all depends on what the cross-axis is. If we -wrap-reverse for example, the cross-axis goes from
+  bottom to top now. Or is we working columns, the cross axis is not left to rigth, or right to left if we go
+  wrap-reverse */
 }
 
 #container div {
-  width: 600px;
+  width: 200px;
   height: 200px;
+  text-align: center;
+  font-size: 4em;
 }

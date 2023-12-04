@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Lists and Forms</title>
+</head>
+
+<body>
+  <!-- Lists can be ordered or unordered with 'ol' and 'ul' -->
+  <!-- For ol, we use the 'type' attr to determine the type of numbering we will have -->
+  <ol type="A">
+    <li>January</li>
+    <li>February</li>
+    <li>March</li>
+  </ol>
+
+  <!-- We can use the style attr to determine the style of bullet for uls -->
+  <ul style="list-style-type:circle">
+    <li>Eliana</li>
+    <li>Chris</li>
+    <!-- We can also have embedded lists -->
+    <ol type="A">
+      <li>SD2x</li>
+      <li>SD4x</li>
+    </ol>
+    <li>Swapneel</li>
+  </ul>
+
+  <!-- Forms are used to retrieve information from user of a page. We use the <form> tag as the root of our forms -->
+  <h1>Application Form</h1>
+  <form action="">
+    <br>Full Name:
+    <input type="text" name="username">
+
+    <br>Email Address:
+    <input type="email" name="email">
+
+    <br>Password:
+    <input type="password" name="password">
+
+    <br>Date of Birth:
+    <input type="date" name="dob">
+
+    <br>Graduation Year:
+    <input type="range" name="gradYr" min="1950" max="2020">
+
+    <br>Gender:
+    <input type="radio" name="genderOption" value="male">Male
+    <input type="radio" name="genderOption" value="female">Female
+    <input type="radio" name="genderOption" value="undisclosed">Undisclosed
+
+    <br>Race:
+    <input type="checkbox" name="race" value="afrAmer">African American
+    <input type="checkbox" name="race" value="asian">Asian
+    <input type="checkbox" name="race" value="white">White
+    <input type="checkbox" name="race" value="amIndian">American Indian
+    <input type="checkbox" name="race" value="pacIsl">Pacific Islander
+    <input type="checkbox" name="race" value="other">Other
+
+    <br>Favorite Color:
+    <input type="color" name="favecolor">
+
+    <br>Resume Submission:
+    <input type="file" name="resume">
+
+    <br><input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+
+  </form>
+
+</body>
+
+</html>

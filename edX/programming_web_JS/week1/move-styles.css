@@ -1,0 +1,9 @@
+/* External CSS:
+   Advantages: Sepaates content and presentation in separate files, not just the body and head. We can also include
+               many different CSS pages with multiple <link> tags
+   Disadvantages: Lots of different files to manage (which might be overkill for smaller pages)
+ */
+#external {
+  color: green;
+  text-transform: capitalize;
+}

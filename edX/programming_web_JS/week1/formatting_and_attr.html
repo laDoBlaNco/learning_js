@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Formatting and Attributes</title>
+  <style>
+    .odd {
+      color: green;
+    }
+
+    .even {
+      color: white;
+      background-color: green;
+
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Some of the core attributes are 
+  title - which gives a suggest title to an element (not the title of the page) and when you over
+          over the element a tooltip will appear with that title
+  style - used to change the visual presentation of an element using 'key:value' pairs (remember 
+          what we lerned from Colt. Inline styles have very specificity and shouldn't be used in production.)
+  We also have 'id' and 'class' attributes in order to uniquely identify elements in HTML. This way can style
+  many elements at the same time and adjust them accordingly without having to go through them 1 at a time.
+  id - provides ability to refer to specific element; id must be unique
+  class - provides ability to refer to a subgroup of elements within html doc; it doesn't have to be unique
+  
+        -->
+
+  <h1 title="Welcome!">Test Title</h1>
+  <h1 style="color:red;text-transform:capitalize">this is a heading</h1>
+  <p>
+    Hello <span style="color:white;background-color:green;font-family:verdana;font-size:200%">world!</span>
+  </p>
+  <p class="odd">1 is an odd number</p>
+  <p class="even">2 is an even number</p>
+  <p class="odd">3 is an odd number</p>
+  <p class="even">4 is an even number</p>
+  <p class="odd">5 is an odd number</p>
+  <p class="even">6 is an even number</p>
+</body>
+
+</html>

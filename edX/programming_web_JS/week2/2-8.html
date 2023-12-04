@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM Events - 2.8</title>
+</head>
+
+<body>
+  <h1>DOM Events - Video 2.8</h1>
+  <button id="clickMe">Click Me!</button>
+  <p>
+    You've clicked the button <span id="numClicks">0 times</span>.
+  </p>
+  <hr>
+  <div id="mouseOverMe">Put the mouse here!</div><br>
+  <div class="highlightedText">This is some text.</div><br>
+  <div>This is some other text.</div><br>
+  <div class="highlightedText">This text is important, too.</div><br>
+  <hr>
+  <input type="text" id="nameInput"><br>
+  <p>
+    Hello, <span id="nameField">guest</span>
+  </p>
+
+
+  <script>
+    // Button Example
+    var clicks = 0;
+    function clickHandler() {
+      clicks++;
+      var numClicksSpan = document.getElementById('numClicks');
+      if (clicks == 1) {
+        numClicksSpan.innerHTML = 'once';
+      } else {
+        numClicksSpan.innerHTML = clicks + ' times';
+      }
+    }
+
+    var button = document.getElementById('clickMe');
+    button.addEventListener('click', clickHandler);
+
+    // mouseover example
+    function makeBold() {
+      var divs = document.getElementsByClassName('highlightedText');
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].style.color = 'red';
+        divs[i].style.fontWeight = 'bold';
+      }
+    }
+
+    function restore() {
+      var divs = document.getElementsByClassName('highlightedText');
+      for (var i = 0; i < divs.length; i++) {
+        divs[i].style.color = 'black';
+        divs[i].style.fontWeight = 'normal';
+      }
+    }
+
+    var mouseOverMeDiv = document.getElementById('mouseOverMe');
+    mouseOverMeDiv.addEventListener('mouseover', makeBold);
+    mouseOverMeDiv.addEventListener('mouseout', restore);
+
+    // Keyboard input example
+    function nameHandler(e) {
+      if (e.keyCode === 13) {
+        var nameInput = document.getElementById('nameInput');
+        var nameField = document.getElementById('nameField');
+        nameField.innerHTML = nameInput.value;
+        nameField.style.backgroundColor = 'cyan';
+        nameField.style.textTransform = 'capitalize';
+      }
+    }
+    document.addEventListener('keyup', nameHandler);
+
+  </script>
+
+
+</body>
+
+</html>

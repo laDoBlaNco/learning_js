@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to the DOM - 2.7</title>
+</head>
+
+<body>
+  <div>
+    The current date/time is <span id="dateTime"></span>.
+  </div>
+  <div>
+    You have visited this page <span id="report"></span> times.
+    Your last visit was <span id="lastVisitDate"></span>.
+  </div>
+  <script>
+    // What is the DOM? - The Document Object Model
+    // A structured tree representation of a web page
+    // HTML of every webpage is turned into a DOM representation by the browser
+
+    // Why do we need the DOM?
+    // HTML specifies the structure of the content of our web page
+    // The DOM provides a way for us to programmatically access that structure using JS
+
+    // DOM Example
+    // The root DOM object can be accessed by the object called 'document'
+    // Elements in this DOM tree can be retrieved and manipulated.
+    var dateTimeField = document.getElementById('dateTime');
+    dateTimeField.innerHTML = new Date();
+
+    // Data can be stored in the browser across multiple page requests using 'localStorage'
+    var timeVisited = 0;
+    var lastVisitDate = 'never';
+
+    if (localStorage.timesVisited) {
+      timesVisited = parseInt(localStorage.timesVisited);
+    }
+    timesVisited++;
+    localStorage.setItem('timesVisited', timesVisited);
+
+    if (localStorage.lastVisit) {
+      var lastVisit = JSON.parse(localStorage.lastVisit);
+      timesVisited = lastVisit.numVisits;
+      lastVisitDate = lastVisit.date;
+    }
+    document.getElementById('lastVisitDate').innerHTML = lastVisitDate;
+
+    timesVisited++;
+    document.getElementId('report').innerHTML = timesVisited;
+
+    var myLastVisit = {};
+    myLastVisit.date = new Date();
+    myLastVisit.numVisits = timesVisited;
+    localStorage.lastVisit = JSON.stringify(myLastVisit);
+
+    var report = document.getElementById('report');
+    report.innerHTML = timesVisited;
+
+    if (timesVisited > 10) report.style.backgroundColor = 'red';
+
+    // At times the items stored in localStorage are more complex and we need JSON
+    // JSON = JavaScript Object Notation
+    // JSON is a textual representation of a JavaScript Object that can be stored as a string, in a .json file
+    // or be exchanged between programs.
+    // To convert between JSON and actual objects we use .stringify and .parse
+    // All values must be a string, number, array, boolean, null or another valid JSON object.
+
+    // A great application of JSON usage is to store JSON strings in local browser storage:
+    let person = { age: 47, name: 'Kevin' };
+    localStorage.myJSON = JSON.stringify(person); // convert to json
+    person = JSON.parse(localStorage.myJSON); // convert back to object
+
+    // When we go into server-side JS, we'll learn how to use JSON data to communicate with a server API.
+
+
+
+
+
+  </script>
+</body>
+
+</html>

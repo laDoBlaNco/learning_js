@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Control Structures</title>
+</head>
+
+<body>
+  <script>
+    // Conditional Statements
+    var a = 75;
+    var b = 60;
+    var max;
+    if (a > b) {
+      max = a;
+    } else {
+      max = b;
+    }
+    console.log(max);
+
+    // Javascript has various comparison operators:
+    //  == equal to
+    //  === equal to and same type
+    //  != not equal to
+    //  !== not equal to or different type
+    //  > greater than
+    //  >= greater than or equal to
+    //  < less than
+    //  <= less than or equal to
+
+    // logical Operators as well:
+    //  || logical OR
+    //  && Logical AND
+    //  ! logical NOT
+
+    // the main different between == and === as well as != and !==
+    // its mainly that there's no type conversion with === and !==
+    console.log(1 == '1');
+    console.log(1 === '1');
+
+    // using truthy and falsy vars with comparison operators
+    // This is great with JS cuz we can compare anything and everything really as any value can be used as a Boolean
+    // which will allow us to design some specific behaviors
+    var x; // falsy
+    if (x) console.log(x);
+    x = 0; // falsy
+    if (x) console.log(x);
+    x = 39; // truthy
+    if (x) console.log(x);
+
+    var y = null;
+    var z;
+    if (y == z) console.log('these are the same');
+    if (y === z) console.log('these are the same');
+
+    // Comparing Numbers and Strings:
+    //  - When comparing a string to a number JS will try to convert the string to a numeric form if possible
+    //  - Non-numeric strings are converted to NaN and then compared
+    //  - Non-numeric strings are compared to each other alphebetically.
+    console.log(5 < '20');
+    console.log('5' < 20);
+    console.log(5 > 'alligator');
+    console.log(5 < 'alligator');
+    console.log(5 == 'alligator');
+    console.log('zebra' > 'giraffe');
+
+    // Comparing Objects
+    //  - Objects are only considered equal if the vars are aliases for one another, i.e. refer to the same object
+    var cooper = { age: 11 }
+    var flanders = { age: 11 }
+    console.log(cooper == flanders);
+
+    var myDog = cooper;
+    console.log(myDog == cooper);
+    console.log(myDog === cooper);
+
+    // Loops:
+    //  - There are 3 major loop structures we'll talk about here
+    var n = 5;
+    var factorial = 1;
+    for (var i = 1; i <= n; i++) {
+      console.log(factorial *= i);
+    }
+    var i = 1;
+    factorial = 1;
+    while (i <= n) {
+      console.log(factorial *= i);
+      i++;
+    }
+    i = 1;
+    factorial = 1;
+    do {
+      console.log(factorial *= i);
+      i++;
+    } while (i <= n);
+
+
+
+
+
+  </script>
+
+</body>
+
+</html>
