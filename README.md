@@ -7,9 +7,4 @@ a necessity to be able to read and debug the all ubiquitous JavaScript along wit
 its partners in crime (HTML and CSS). In fact, JS and TS remain one of the top programming
 languages for a reason and are therefore worth my time. 
 
-This repository is devoted to that path as I become an expert in
-- Go
-- Dart
-- Flutter
-- JavaScript
-- TypeScript
+
