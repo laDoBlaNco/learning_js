@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction to JQuery - Video 2.9</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h1>Button Example with JQuery:</h1>
+  <button id="clickMe">Click Me!</button><br>
+  <p>
+    You've clicked the button <span id="numClicks">0 times</span>.
+  </p>
+  <hr>
+  <h1>Input Example:</h1>
+  <input type="text" id="itemField">
+  <ul>
+    <span id="list"></span>
+  </ul>
+  <hr>
+  <h1>Access Multiple Elements Example:</h1>
+  <ul>
+    <li>dog</li>
+    <li>cat</li>
+    <li>elephant</li>
+    <li>bear</li>
+  </ul>
+
+
+  <script>
+    //=================================================
+    // Button Example:
+    var clicks = 0;
+    function clickHandler() {
+      clicks++;
+      var numClicksSpan = $('#numClicks');
+      if (clicks === 1) {
+        numClicksSpan.html('once');
+      } else {
+        numClicksSpan.html(clicks + ' times');
+      }
+    }
+
+    $('#clickMe').click(clickHandler);
+
+    //==================================================
+    // Input Example:
+    function keyPressHandler(e) {
+      if (e.keyCode === 13) {
+        $('#list').append('<li>' + $('#itemField').val() + '</li>');
+        $('#itemField').val('');
+      }
+    }
+    $('#itemField').keyup(keyPressHandler);
+
+    //==================================================
+    // Multiple Elements Example:
+    $('li').click(function () {
+      $(this).css('font-weight', 'bold');
+    })
+
+  </script>
+</body>
+
+</html>
