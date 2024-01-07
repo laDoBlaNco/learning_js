@@ -15,3 +15,5 @@ function randomFraction() {
 
   // Only change code above this line
 }
+
+console.log(randomFraction());
