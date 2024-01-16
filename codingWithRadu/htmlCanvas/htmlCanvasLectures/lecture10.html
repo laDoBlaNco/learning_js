@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final JavaScript Project</title>
+    <!-- <link rel="stylesheet" href=".css"> -->
+  </head>
+  <body>
+    <h1>Final JavaScript Snowman Project</h1>
+    <canvas id='canvas1'
+      style='border:solid;background-color:#009bd7'
+      width=400 height=400></canvas>
+
+    <script src='snowman.js'></script>
+    <script>
+      const ctx=document.getElementById('canvas1').getContext('2d');
+
+      let p=0;
+
+      const bow = new Image();
+      bow.src='bowTie.png';
+      
+      canvas1.addEventListener('mousemove',(e)=>{
+        p=e.offsetX/canvas1.width;
+      })
+
+      animate()
+      function animate(){
+        // I'm moving on to something else, but I haven't quite figured out how to make the tie and eyes
+        // relative to the snowballs. Its all in the % of their current size which is all relative
+        // to the bottom ball, but the ratios are off and one of the eyes is moving faster than the
+        // other
+        ctx.clearRect(0,0,canvas1.width,canvas1.height);
+        drawSnowman(200,640,160,0.7,p,bow);
+        requestAnimationFrame(animate);
+      }
+
+    </script>
+
+  </body>
+</html>

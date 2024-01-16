@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+  <title>HTML Canvas Lecture 2</title>
+</head>
+<body>
+  <h1>Drawing Shapes Using JavaScript</h1>
+  <canvas id='myCanvas' width='400px' height='400px' style='background-color:yellow;'></canvas>
+
+  <script>
+    const el=document.getElementById('myCanvas');
+    const ctx=el.getContext('2d');
+
+
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.font='18px Courier';
+    ctx.strokeText('0,0',20,15);
+    ctx.strokeText('X',390,15);
+    ctx.strokeText('Y',10,390);
+    ctx.strokeText('400,400',355,390);
+    ctx.strokeText('π ≈ 3.14',200,350);
+    ctx.strokeText('Length = 2πR',200,370);
+
+    
+    ctx.beginPath(); // start fresh
+    ctx.moveTo(100,300); // moving the pen over some location
+    ctx.lineTo(300,300); // deciding where our hand will draw the line to
+    ctx.lineTo(300,100); // we can chain as many lines as we want before actually stroking
+    ctx.lineTo(200,50); // remember the start point is where we left off the last lineTo, but always x,y
+    ctx.lineTo(100,100);
+    // ctx.lineTo(100,300);
+    ctx.closePath(); // another way to return to the beginning point
+    ctx.stroke();
+
+    ctx.beginPath();
+
+    // We can also draw with other things such as curves or arcs. Lets do a circle
+    ctx.arc(200,200,50,0,Math.PI*2) // arc(center x, center y, radius,start,finish)
+    ctx.stroke();
+
+    // now a quick way to draw a rectangle, to give us our basic shapes lets do a base
+    ctx.beginPath();
+    ctx.rect(100,300,200,20); // rect(top_leftx,top_lefty,width,height)
+    ctx.stroke();
+    
+  </script>
+  
+</body>
+</html>

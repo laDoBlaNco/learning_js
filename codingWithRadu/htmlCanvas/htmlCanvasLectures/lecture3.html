@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+  <title>HTML Canvas Lecture 3</title>
+  <style>
+    canvas{
+      background-color:rgb(50,228,202);
+    }
+  </style>
+</head>
+<body>
+  <h1>Color and Style</h1>
+  <canvas id='myCanvas' width=400 height=400></canvas>
+
+  <script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.rect(100,100,200,200);
+    ctx.lineWidth=70;
+    ctx.strokeStyle='rgb(223,226,60)';
+    ctx.fillStyle='#ad2c05';
+    ctx.fill();
+    ctx.stroke();
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Canvas - Lecture 8</title>
+    <!-- <link rel="stylesheet" href=".css"> -->
+  </head>
+  <body>
+    <h1>Text and Images on HTML Canvas</h1>
+    <canvas id='canvas1'
+      style='border:solid;background-color:pink'
+      width=400 height=400></canvas>
+
+    <script>
+      const ctx=document.getElementById('canvas1').getContext('2d');
+
+      const heartImage=new Image();
+      heartImage.src='heart.png';
+      const smileyImage=new Image();
+      smileyImage.src='smiley.png';
+
+      const maxY=100;
+      const rangeY=100;
+      let p=0;
+
+      // Don't need to wait on load since we are animating and redrawing on frames.
+      // heartImage.onload=()=>{
+      //   ctx.drawImage(heartImage,200,70,150,150);        
+      // }
+      // smileyImage.onload=()=>{
+      //   ctx.drawImage(smileyImage,25,70,150,150);        
+      // }
+
+      animate();
+      function animate(){
+        p+=0.02;
+        if(p>1){
+          p=0;
+        }
+        const y=maxY-Math.abs(Math.sin(p*Math.PI))*rangeY;
+        ctx.clearRect(0,0,canvas1.width,canvas1.height);
+
+        ctx.drawImage(heartImage,200,y,150,150);
+        ctx.drawImage(smileyImage,25,y,150,150);
+
+        ctx.font='30px Arial';
+        ctx.textBaseline='middle';
+        ctx.textAlign='center';
+        ctx.fillStyle='red';
+        ctx.fillText('HTML Canvas',200,300);
+        ctx.strokeStyle='red';
+        ctx.strokeText('HTML Canvas',200,350);
+
+        requestAnimationFrame(animate);
+      }
+      
+
+      
+    </script>
+
+    
+
+  </body>
+</html>

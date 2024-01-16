@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Canvas - Lecture 9</title>
+    <!-- <link rel="stylesheet" href=".css"> -->
+  </head>
+  <body>
+    <h1>JavaScript Piano - Keyboard Input and Audio Playback</h1>
+  
+    <script>
+      const s1=new Audio('s1.wav');
+      const s2=new Audio('s2.wav');
+      const s3=new Audio('s3.wav');
+      const s4=new Audio('s4.wav');
+      const s5=new Audio('s5.wav');
+      const s6=new Audio('s6.wav');
+
+      document.addEventListener('keydown',(e)=>{
+        switch(e.code){
+          case 'Digit1':s1.currentTime=0;s1.play();break;
+          case 'Digit2':s2.currentTime=0;s2.play();break;
+          case 'Digit3':s3.currentTime=0;s3.play();break;
+          case 'Digit4':s4.currentTime=0;s4.play();break;
+          case 'Digit5':s5.currentTime=0;s5.play();break;
+          case 'Digit6':s6.currentTime=0;s6.play();break;
+        }
+      })
+
+    </script>
+    
+
+  </body>
+</html>

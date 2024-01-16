@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Segment Intersection Formula Explained</title>
+    <!-- <link rel="stylesheet" href=".css"> -->
+    <style>
+      body{
+        margin:0;
+        overflow:hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id='myCanvas'></canvas>
+    <script>
+      // stretch the canvas to cover the entire window
+      myCanvas.width=window.innerWidth;
+      myCanvas.height=window.innerHeight;
+
+      // create some points for our line segments to determine when they are intersecting.
+      const A={x:200,y:150};
+      const B={x:150,y:250};
+      const C={x:50,y:100};
+      const D={x:250,y:200};
+      
+      // get our context so we can start visualizing
+      const ctx=document.getElementById('myCanvas').getContext('2d');
+
+      
+      let angle=0;
+      const mouse={x:0,y:0};
+      document.onmousemove=(e)=>{
+        mouse.x=e.x;
+        mouse.y=e.y;
+      }
+
+      animate();
+
+      function animate(){
+        const radius=50;
+        A.x=mouse.x+Math.cos(angle)*radius;
+        A.y=mouse.y-Math.sin(angle)*radius;
+        B.x=mouse.x-Math.cos(angle)*radius;
+        B.y=mouse.y+Math.sin(angle)*radius;
+        angle+=0.02;
+        
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+        // draw our line segments
+        ctx.beginPath();
+        ctx.moveTo(A.x,A.y);
+        ctx.lineTo(B.x,B.y);
+        ctx.moveTo(C.x,C.y);
+        ctx.lineTo(D.x,D.y);
+        ctx.stroke();
+  
+        // draw the actual points so we can visualize them
+        drawDot(A,'A');
+        drawDot(B,'B');
+        drawDot(C,'C');
+        drawDot(D,'D');
+  
+        // before diving into the intersection, let's look at how we get the middle of a segment. 
+        // (hint hint) I bet its linear interpolation
+        // const M={x:lerp(A.x,B.x,t),y:lerp(A.y,B.y,t)}; 
+        // const N={x:lerp(C.x,D.x,t),y:lerp(C.y,D.y,t)}; 
+ 
+        // drawDot(M,'M',t<0||t>1);        
+        // drawDot(N,'N',t<0||t>1);
+
+        const I=getIntersection(A,B,C,D);
+        if(I)drawDot(I,"I");
+
+        // ctx.beginPath();
+        // ctx.rect(myCanvas.width/2,0,I.bottom/100,10);
+        // ctx.fill();
+        
+
+        requestAnimationFrame(animate);
+      }
+
+      // HERE IS THE MATH THAT I NEED TO UNDERSTAND AND THE REAL REASON I'M WATCHING THIS FOR A SECOND TIME
+      // SO I'LL SPEND SOME EXTRA TIME ON IT THIS RUN
+      function getIntersection(A,B,C,D){
+      /*
+
+      So to be an intersection, this point needs to satisfy both of the following:
+      NOTE- THIS IS JUST THE LERP FORMULA, I'M SEEING IT NOW :) (Ax plus (Bx minus Ax) times t), etc.
+      So we are saying in my own words:
+      The x coord of the intersection but the at the same linear interpolation point for both A/B and C/D  and
+      the same for the y coord. Also note the different %s since using the same will never intersect (t & u) since
+      they must move at different rates or %s
+      
+      Ix = Ax+(Bx-Ax)t = Cx+(Dx-Cx)u
+      Iy = Ay+(By-Ay)t = Cy+(Dy-Cy)u
+
+      So mathematically, let's try to figure out what 'u' needs to be in terms of 't'. That's really the only
+      thing we need to figure out. So...using our high school algebra equaltion skills, let's solve for 'u'
+      
+      Ax+(Bx-Ax)t = Cx+(Dx-Cx)u  | -Cx from this side giving us...
+      (Ax-Cx)+(Bx-Ax)t = (Dx-Cx)u  | we could then just divide to get rid of DX-CX and stay with 'u', but it could
+      be zero and that wouldn't be possible. So we leave it like this for now.
+
+      Ay+(By-Ay)t = Cy+(Dy-Cy)u  | -Cy again we subtract Cy from this side...
+      (Ay-Cy)+(By-Ay)t = (Dy-Cy)u  |  *(Dx-Cx) this is apparently a trick we can do which will make sense in a bit
+      (Ay-Cy)(Dx-Cx)+(By-Ay)(Dx-Cx) = (Dy-Cy)(Dx-Cx)u  | So by multiplying this we see that (Dx-Cx)u is the same
+      as above '(Ax-Cx)+(Bx-Ax)t = (Dx-Cx)u' meaning we can replace (Dx-Cx)u with (Ax-Cx)+(Bx-Ax)t
+
+      (Ay-Cy)(Dx-Cx)+(By-Ay)(Dx-Cx) = (Dy-Cy)(Ax-Cx)+(Dy-Cy)(Bx-Ax)t  | Now let's get down to 't' first we
+      subtract '(Dy-Cy)(Ax-Cx)'
+      (Ay-Cy)(Dx-Cx)+(By-Ay)(Dx-Cx)-(Dy-Cy)(Ax-Cx) = (Dy-Cy)(Bx-Ax)t  | Then not 100% sure why we subtract from the other side
+      (Ay-Cy)(Dx-Cx)-(Dy-Cy)(Ax-Cx) = (Dy-Cy)(Bx-Ax)-(By-Ay)(Dx-Cx)t  | and then finally we divide
+      (Ay-Cy)(Dx-Cx)-(Dy-Cy)(Ax-Cx) / (Dy-Cy)(Bx-Ax)-(By-Ay)(Dx-Cx) = t 
+
+      I gotta say, I'm thinking that we could've done that shorter by dividing from the right side on that second to
+      last step, which would have given me:
+      
+      (Ay-Cy)(Dx-Cx)+(By-Ay)(Dx-Cx)-(Dy-Cy)(Ax-Cx) / (Dy-Cy)(Bx-Ax) = t ... so I'll test this (my version) later.
+
+      Then we simplify this with variables 'top' and 'bottom' and then do top / bottom and let JS figure it out.
+
+      *** I'll first implement my version to see if I get the same result as radu, before copying his***
+      Update: my version didn't work :D So apparently the subtraction was necessary, though again I'm not 100%
+      sure as to why. 
+
+      I'll figure out 'u' the same way we did 't' as homework and then compare to his answer:
+      I think most of it would be the same up until we replaced the (Dx-Cx)u with (Ax-Cx)+(Bx-Ax)t. So this time we 
+      will either replace the other side, or not replace it at all.
+
+      Ix = Ax+(Bx-Ax)t = Cx+(Dx-Cx)u
+      Iy = Ay+(By-Ay)t = Cy+(Dy-Cy)u
+
+      Ax+(Bx-Ax)t = Cx+(Dx-Cx)u | start on the left this time -Ax
+      (Bx-Ax)t = (Cx-Ax)+(Dx-Cx)u  | again we'll leave this as is and move to the next 'y'
+
+      Ay+(By-Ay)t = Cy+(Dy-Cy)u  |  -Ay
+      (By-Ay)t = (Cy-Ay)+(Dy-Cy)u  | *(Bx-Ax) let's see if this trick works
+      (By-Ay)(Bx-Ax)t = (Bx-Ax)(Cy-Ay)+(Bx-Ax)(Dy-Cy)u | So now we replace (BX-AX)t with the above
+      (By-Ay)(Cx-Ax)+(By-Ay)(Dx-Cx)u = (Bx-Ax)(Cy-Ay)+Bx-Ax)(Dy-Cy)u  | 
+      (By-Ay)(Dx-Cx)-(Bx-Ax)(Cy-Ay)u = (Bx-Ax)(Dy-Cy)-(By-Ay)(Cx-Ax)u???????????????????
+      
+      */
+        const tTop=(D.x-C.x)*(A.y-C.y)-(D.y-C.y)*(A.x-C.x);
+        const utop=(C.y-A.y)*(A.x-B.x)-(C.x-A.x)*(A.y-B.y);
+        const bottom=(D.y-C.y)*(B.x-A.x)-(D.x-C.x)*(B.y-A.y);
+
+        if(bottom!==0){
+          const t=tTop/bottom;
+          const u=utop/bottom;
+          if(t>=0 && t<=1 && u>=0 && u<=1){
+            return {x:lerp(A.x,B.x,t),y:lerp(A.y,B.y,t),offset:t};
+          }
+        }
+        return null;
+      }
+        
+      // remember that linear interpolation is simply returning to us a position between two points that is 
+      // governed by a stated %. In the case above its 50% or half. So its a specific % away from the starting
+      // point. So 50% away from A in this case. Or 70% away from A, etc. 
+      function lerp(A,B,t){
+        return A+(B-A)*t;
+      }
+
+      function drawDot(point,label,isRed){
+        ctx.beginPath();
+        ctx.fillStyle=isRed?'red':'white';
+        ctx.arc(point.x,point.y,10,0,Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle='black';
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        ctx.font='bold 14px Arial';
+        ctx.fillText(label,point.x,point.y);
+      }
+
+      
+      
+      
+    </script>
+    
+
+  </body>
+</html>

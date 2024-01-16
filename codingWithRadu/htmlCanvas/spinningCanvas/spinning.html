@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang=en>
+  <head>
+    <meta charset=utf-8>
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name=viewport content="width=device-width,initial-scale=1.0">
+    <title>Spinning Canvas Drawing App</title>
+    <link rel=stylesheet href=style.css>
+  </head>
+  <body>
+    <!-- An interesting tidbit I learned today is that if we adjust the width and height in CSS we are
+    only stretching the canvas and not actually changing its size. If we want to change the size we need
+    to do that here below (or maybe in JS)-->
+    <canvas id=myCanvas width=400 height=400></canvas>
+    <label for='speedSlider'>SPEED</label>
+    <br> 
+    <input 
+      type='range'
+      id='speedSlider'
+      min='-3'
+      max='3'
+      step='0.2'
+      value='0'
+      oninput='updateRotationSpeed()'
+    />
+    <script src=main.js></script>
+    <script src=destructuring.js></script>
+
+  </body>
+</html>

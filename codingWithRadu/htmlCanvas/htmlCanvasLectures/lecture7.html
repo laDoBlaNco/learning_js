@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Canvas - Lecture 7</title>
+    <!-- <link rel="stylesheet" href=".css"> -->
+  </head>
+  <body>
+    <h1>HTML Canvas Mouse Interactions</h1>
+    <canvas id='myCanvas'
+      style='border:solid;background-color:silver;'
+      width=400 height=400></canvas>
+
+    <script>
+      const ctx=document.getElementById('myCanvas').getContext('2d');
+      const minRad=10;
+      const rangeRad=20;
+      let p=0;
+      let x=200;
+      let y=200;
+
+      animate();
+      function animate(){
+        p+=0.02;
+        if(p>1)p=0;
+        const rad=minRad+rangeRad*p;
+
+        ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+        ctx.beginPath();
+        ctx.arc(x,y,rad,0,Math.PI*2);
+        ctx.stroke();
+        
+        requestAnimationFrame(animate);
+      }
+
+      myCanvas.addEventListener('mousemove',(info)=>{
+        x=info.offsetX;
+        y=info.offsetY;
+      });
+
+      
+    </script>
+    
+
+  </body>
+</html>
