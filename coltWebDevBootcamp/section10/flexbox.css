@@ -15,7 +15,6 @@ Flexbox has about 8-10 properties that work together. they are:
 display:flex - basically turning on flexbox
 flex-direction:row - with this we can change our main axis direction
 justify-content - determines how the elements are distributed across the main access
-                  so its behavior is total dependent on the flex-direction
 flex-wrap - uses 'wrap' and 'wrap-reverse' and just determins if the elements wrap when they hit the
             edges, or if they are squashed to fit. wrap and wrap-reverse take into consideration the 'cross-axis'
 align-items - very similar to justify-content using the main and cross axis to determine where we start and end, etc

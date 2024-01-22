@@ -92,7 +92,7 @@ class Level{
         level.outputs[i]=0; // turning it off 
       }
     }
-
+    // console.log(level.outputs);
     return level.outputs;
   }
 }
