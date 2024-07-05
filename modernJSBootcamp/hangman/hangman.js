@@ -1,9 +1,12 @@
+// First Challenge:
 // 1. Create a constructor for the hangman game
 // 2. Setup two attributes. One for the word itself. Another for the number of guesses allowed.
 // 3. Create two instances of it and print both to the console.
+// Second Challenge:
 // 4. Set up the word instance property as an array of lowercase letters
 // 5. Set up another instance property to store guessed letters
 // 6. Create a method that gives you the word puzzle back.
+// Third Challenge:
 // 7. Create a method for making a guess
 //    1. Should accept a charactor for guessing
 //    2. Should add unique guesses to the list of guesses
@@ -18,75 +21,76 @@
 
 // No guesses? -> ***
 // Guessed "c", "b", "t"? -> c*t
+// Remember that we must use 'function' because => funcs don't bind 'this' and we need access to 'this' with OOP
 const Hangman = function (word, remainingGuesses) {
-    this.word = word.toLowerCase().split('')
-    this.remainingGuesses = remainingGuesses
-    this.guessedLetters = []
-    this.status = 'playing'
+  this.word = word.toLowerCase().split('')
+  this.remainingGuesses = remainingGuesses
+  this.guessedLetters = []
+  this.status = 'playing'
 }
 
 Hangman.prototype.calculateStatus = function () {
 
-    // HERE'S ONE MORE APPROACH OF DOING THIS BUT WITH A METHOD CREATED ESPECIALLY FOR THIS TYPE OF SITUATION
-    // 'every' only returns true if everything in your array passes
-    // your return test
-    const finished = this.word.every((letter) =>this.guessedLetters.includes(letter))
+  // HERE'S ONE MORE APPROACH OF DOING THIS BUT WITH A METHOD CREATED ESPECIALLY FOR THIS TYPE OF SITUATION
+  // 'every' only returns true if everything in your array passes
+  // your return test
+  const finished = this.word.every((letter) => this.guessedLetters.includes(letter))
 
 
-    // // ANOTHER WAY TO STRUCTURE THIS ONE WHICH IS ACTUALLY SHORTER
-    // const lettersUnguessed = this.word.filter((letter) => {
-    //     return !this.guessedLetters.includes(letter)
-    // })
-    // const finished = lettersUnguessed.length === 0
+  // // ANOTHER WAY TO STRUCTURE THIS ONE WHICH IS ACTUALLY SHORTER
+  // const lettersUnguessed = this.word.filter((letter) => {
+  //     return !this.guessedLetters.includes(letter)
+  // })
+  // const finished = lettersUnguessed.length === 0
 
-    // FIRST WAY OF STRUCTURING THIS
-    // let finished = true
+  // FIRST WAY OF STRUCTURING THIS
+  // let finished = true
 
-    // this.word.forEach((letter) => {
-    //     if (this.guessedLetters.includes(letter)) {
+  // this.word.forEach((letter) => {
+  //     if (this.guessedLetters.includes(letter)) {
 
-    //     } else {
-    //         finished = false
-    //     }
-    // })
+  //     } else {
+  //         finished = false
+  //     }
+  // })
 
-    if (this.remainingGuesses === 0) {
-        this.status = 'failed'
-    } else if (finished) {
-        this.status = 'finished'
-    } else {
-        this.status = 'playing'
-    }
+  if (this.remainingGuesses === 0) {
+    this.status = 'failed'
+  } else if (finished) {
+    this.status = 'finished'
+  } else {
+    this.status = 'playing'
+  }
 }
 
 Hangman.prototype.getPuzzle = function () {
-    let puzzle = ''
+  let puzzle = ''
 
-    this.word.forEach((letter) => {
-        if (this.guessedLetters.includes(letter) || letter === ' ') {
-            puzzle += letter
-        } else {
-            puzzle += '*'
-        }
-    })
+  this.word.forEach((letter) => {
+    if (this.guessedLetters.includes(letter) || letter === ' ') {
+      puzzle += letter
+    } else {
+      puzzle += '*'
+    }
+  })
 
-    return puzzle
+  return puzzle
 }
 
 Hangman.prototype.makeGuess = function (guess) {
-    guess = guess.toLowerCase()
-    const isUnique = !this.guessedLetters.includes(guess)
-    const isBadGuess = !this.word.includes(guess)
+  guess = guess.toLowerCase()
+  const isUnique = !this.guessedLetters.includes(guess)
+  const isBadGuess = !this.word.includes(guess)
 
-    if (isUnique) {
-        this.guessedLetters.push(guess)
-    }
+  if (isUnique) {
+    this.guessedLetters.push(guess)
+  }
 
-    if (isUnique && isBadGuess) {
-        this.remainingGuesses--
-    }
+  if (isUnique && isBadGuess) {
+    this.remainingGuesses--
+  }
 
-    this.calculateStatus()
+  this.calculateStatus()
 }
 
 

@@ -1,5 +1,5 @@
-const myAge = 46
-const message = myAge >= 18 ? 'You can vote!' : 'You cannot vote!'
+// const myAge = 46
+// const message = myAge >= 18 ? 'You can vote!' : 'You cannot vote!'
 
 // we can use the ternary statement in js when we have a condition of 2 items
 // when we only have 2 choices and the result is 1/2 things. If that's our situation
@@ -15,15 +15,15 @@ const message = myAge >= 18 ? 'You can vote!' : 'You cannot vote!'
 //     message = 'You cannot vote!'
 // }
 
-console.log(message)
+// console.log(message)
 
 // another example
 const theAge = 13
 const showPage = () => {
-    console.log('Showing the page');
+  console.log('Showing the page');
 }
 const showErrorPage = () => {
-    console.log('Showing the error page')
+  console.log('Showing the error page')
 }
 
 // here we use the ternary operator to actually run 1 of 2 functions as well.
@@ -40,3 +40,4 @@ console.log(msg)
 team.length <= 4 ? console.log() : console.log()
 // or
 console.log(team.length <= 4 ? `Team size: ${team.length}` : 'Way too many people on your team')
+
