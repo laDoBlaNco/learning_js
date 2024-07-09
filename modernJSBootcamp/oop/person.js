@@ -1,3 +1,46 @@
+// Now let's just get into the syntactic sugar of the 'class' keyword in JS. I know this from other
+// studies, so it'll just be a review here. The various steps we'll be simply moving to the class
+// syntax are:
+//  1. class Name
+//  2. constructor
+//  3. methods
+
+// class itself
+class PersonClass {
+  // constructor
+  constructor(firstName, lastName, age, likes = []) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.likes = likes;
+  }
+
+  // methods
+  getBio() {
+    let bio = `${this.firstName} is ${this.age}.\n`
+
+    this.likes.forEach((like) => {
+      bio += `${this.firstName} likes ${like}.\n`
+    })
+    return bio;
+  }
+  setName(fullName) {
+    const names = fullName.split(' ')
+    this.firstName = names[0]
+    this.lastName = names[1]
+  }
+
+}
+
+
+// The original way:
+const myPerson = new PersonClass('Kevin', 'Whiteside', 47, ['coding', 'hacking', 'wifey'])
+console.log(myPerson);
+console.log(myPerson.getBio());
+myPerson.setName('Odalis Whiteside');
+console.log(myPerson.getBio());
+
+// this is the constructor function, so with the class syntax we just put it in 'constructor'
 const Person = function (firstName, lastName, age, likes = []) {
   this.firstName = firstName
   this.lastName = lastName

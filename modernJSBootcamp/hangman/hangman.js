@@ -13,12 +13,87 @@
 //    3. Should decrement t he guesses left if a unique guess isn't a match
 // 8. Display the puzzle now to the browser instead of the console
 // 9. Display the guesses left to the browser instead of the console
-// 10. Separate the Hangman definition from teh rest of the app (use app.js)
+// 10. Separate the Hangman definition from the rest of the app (use app.js)
 // 11. Setup a new 'status' property with inital value of 'playing'
 // 12. Create method for recalculating status to 'playing', 'finished', 'failed'
 // 13. Call that method after a guess is processed
 // 14. use console.log to print the status
+// Fourth Challenge:
+// 15. Disable new guesses unless 'playing' status
+// 16. Setup a new method to get back a status message
+//    1. Playing -> Guesses left: 3
+//    2. Failed -> Nice try! The word was '-----'
+//    3. Finsished -> Great work! You guessed the word.
+// Fifth Challenge:
+// 17. Convert this file to the new class syntax
 
+
+//====================== New Class syntax =========================================================
+// Class itself:
+class Hangman {
+  // construtor:
+  constructor(word, remainingGuesses) {
+    this.word = word.toLowerCase().split('');
+    this.remainingGuesses = remainingGuesses;
+    this.guessedLetters = [];
+    this.status = 'playing';
+  }
+  // Methods:
+  calculateStatus() {
+    const finished = this.word.every((letter) => this.guessedLetters.includes(letter));
+    if (this.remainingGuesses === 0) {
+      this.status = 'failed'
+    } else if (finished) {
+      this.status = 'finished'
+    } else {
+      this.status = 'playing'
+    }
+  }
+  getPuzzle() {
+    let puzzle = ''
+
+    this.word.forEach((letter) => {
+      if (this.guessedLetters.includes(letter) || letter === ' ') {
+        puzzle += letter
+      } else {
+        puzzle += '*'
+      }
+    })
+
+    return puzzle
+
+  }
+  makeGuess(guess) {
+    if (this.status === 'playing') {
+      guess = guess.toLowerCase()
+      const isUnique = !this.guessedLetters.includes(guess)
+      const isBadGuess = !this.word.includes(guess)
+
+      if (isUnique) {
+        this.guessedLetters.push(guess)
+      }
+
+      if (isUnique && isBadGuess) {
+        this.remainingGuesses--
+      }
+
+      this.calculateStatus()
+    }
+  }
+  getStatus() {
+    if (this.status === 'finished') {
+      return `Great work! You guessed the word.`
+    } else if (this.status === 'failed') {
+      return `Nice try! The word was "${this.word.join('')}".`
+    } else {
+      return `Guesses left: ${this.remainingGuesses}`
+    }
+
+  }
+}
+
+/*
+//======================= Old Prototypal syntax ===================================================
 // No guesses? -> ***
 // Guessed "c", "b", "t"? -> c*t
 // Remember that we must use 'function' because => funcs don't bind 'this' and we need access to 'this' with OOP
@@ -78,22 +153,35 @@ Hangman.prototype.getPuzzle = function () {
 }
 
 Hangman.prototype.makeGuess = function (guess) {
-  guess = guess.toLowerCase()
-  const isUnique = !this.guessedLetters.includes(guess)
-  const isBadGuess = !this.word.includes(guess)
+  if (this.status === 'playing') {
+    guess = guess.toLowerCase()
+    const isUnique = !this.guessedLetters.includes(guess)
+    const isBadGuess = !this.word.includes(guess)
 
-  if (isUnique) {
-    this.guessedLetters.push(guess)
+    if (isUnique) {
+      this.guessedLetters.push(guess)
+    }
+
+    if (isUnique && isBadGuess) {
+      this.remainingGuesses--
+    }
+
+    this.calculateStatus()
   }
 
-  if (isUnique && isBadGuess) {
-    this.remainingGuesses--
-  }
-
-  this.calculateStatus()
 }
 
+Hangman.prototype.getStatus = function () {
+  if (this.status === 'finished') {
+    return `Great work! You guessed the word.`
+  } else if (this.status === 'failed') {
+    return `Nice try! The word was "${this.word.join('')}".`
+  } else {
+    return `Guesses left: ${this.remainingGuesses}`
+  }
 
+}
+*/
 
 // my solution works perfectly, but I forgot to make the g (guess) lowercase
 // also there's no reason in my second if statement to confirm what's in this.wordLetters

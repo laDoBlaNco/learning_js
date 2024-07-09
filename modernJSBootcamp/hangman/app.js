@@ -4,20 +4,22 @@
 // 4. Use console.log to print the status.
 
 const puzzle = document.getElementById('puzzle')
-const guesses = document.getElementById('guesses')
+const statusView = document.getElementById('statusMessage')
 const game = new Hangman('Cat', 2)
 
 puzzle.innerHTML = game.getPuzzle()
-guesses.innerHTML = game.remainingGuesses
-console.log(game.status) 
+statusView.innerHTML = game.getStatus();
 
+// one difference in this and what Andrew publishes is that the 'charCode' method is deprecated
+// so I've changed it to e.key where I can which is much easier
 window.addEventListener('keypress', (e) => {
-    const guess = String.fromCharCode(e.charCode)
-    game.makeGuess(guess)
-    puzzle.innerHTML = game.getPuzzle()
-    guesses.innerHTML = game.remainingGuesses
-    console.log(game.status)
+  const guess = e.key;
+  game.makeGuess(guess)
+  puzzle.innerHTML = game.getPuzzle()
+  statusView.innerHTML = game.getStatus();
 })
+
+
 
 
 /*
@@ -35,10 +37,9 @@ console.log(team.hasOwnProperty('length'))
 // rarely see this in the wild.
 console.log('======================')
 
-// Function: muFunc --> Function.prototype --> Object.prototype --> null
-function getScore() {
-    return 1
-}
+// Function: myFunc --> Function.prototype --> Object.prototype --> null
+const getScore = () => 1;
+
 console.log(getScore) // strangely it doesn't allow me to see inside of a function
 // so I can't crack it up to see the object tree on this one. But completed
 // the chain from Andrew's screen. I tried both short syntax , const, and the above.
@@ -47,12 +48,12 @@ console.log(getScore) // strangely it doesn't allow me to see inside of a functi
 console.log('======================')
 // product --> Object.prototype --> null (this means the chain ends) 
 const product = {
-    name: 'The War Of Art'
+  name: 'The War Of Art'
 }
 
 // hasOwnProperty
 console.log(product.hasOwnProperty('hasOwnProperty'))
-// internally when we use methods on literal strutures we are actually using
+// internally when we use methods on literal structures we are actually using
 // shared methods from the Object.prototype. The prototype built into JS
 // Understanding that we see why its 'hasOwnProptery' because we are asking if
 // it exists on the actual instance and not up its prototyp chain.
