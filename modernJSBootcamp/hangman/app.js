@@ -5,7 +5,7 @@
 
 const puzzle = document.getElementById('puzzle')
 const statusView = document.getElementById('statusMessage')
-const game = new Hangman('Cat', 2)
+const game = new Hangman('Car Parts', 2)
 
 puzzle.innerHTML = game.puzzle;
 statusView.innerHTML = game.statusMessage;
