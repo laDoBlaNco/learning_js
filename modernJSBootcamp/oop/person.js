@@ -5,6 +5,8 @@
 //  2. constructor
 //  3. methods
 
+// So our prototypal tree is: myPerson --> Person.prototype --> Object.prototype --> null
+
 // class itself
 class PersonClass {
   // constructor
@@ -24,7 +26,8 @@ class PersonClass {
     })
     return bio;
   }
-  setName(fullName) {
+  // let's turn this into a custom setter rather than a method call.
+  set fullName(fullName) {
     const names = fullName.split(' ')
     this.firstName = names[0]
     this.lastName = names[1]
@@ -32,14 +35,45 @@ class PersonClass {
 
 }
 
+// But if I want to make other types of persons with some small differences, there'll be a lot of duplicate code. That's when sublclassing comes into play.
+// employee person
+// start with the standard class structure and then 'extends'
+class Employee extends PersonClass {
+
+  // we start by overriding things, starting with the constructor
+  constructor(firstName, lastName, age, position, likes) {
+    // we do have to call the parent contstuctor to use it here.
+    super(firstName, lastName, age, likes);
+    this.position = position;
+  }
+  // we can then override behavior and create new behavior.
+  getBio() {
+    return `${this.firstName} is a ${this.position}.`
+  }
+  getYearsLeft() {
+    return 65 - this.age;
+  }
+  // let's add a custom getter to Employee so we can get the fullName from the first and last names.
+  // Note that this proves that we don't need both getter and setter in every class. Just where we need it
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
 
 // The original way:
-const myPerson = new PersonClass('Kevin', 'Whiteside', 47, ['coding', 'hacking', 'wifey'])
-console.log(myPerson);
+const myPerson = new Employee('Kevin', 'Whiteside', 47, 'Senior Director of Operations', ['coding', 'hacking', 'wifey']);
+// console.log(myPerson);
 console.log(myPerson.getBio());
-myPerson.setName('Odalis Whiteside');
-console.log(myPerson.getBio());
+console.log(myPerson.getYearsLeft());
+// this works even though this property doesn't actually exist. Its a computed property
+console.log(myPerson.fullName);
 
+const myPerson2 = new PersonClass('Juana', 'Lorenzo', 50, ['cleaning', 'preaching', 'jugando']);
+console.log(myPerson2.getBio());
+myPerson2.fullName = 'Odalis Whiteside';
+console.log(myPerson2.getBio());
+console.log('===============================================================================================');
 // this is the constructor function, so with the class syntax we just put it in 'constructor'
 const Person = function (firstName, lastName, age, likes = []) {
   this.firstName = firstName
@@ -60,13 +94,13 @@ const me = new Person('Kevin', 'Whiteside', 46, ['hacking', 'wifey']) // now usi
 // also notice that we don't explicitly return anything from the constructors. 'new' does this implicitly
 // setting up the new object instance and giving us access to it.
 
-console.log(me)
-console.log(me.age)
+// console.log(me)
+// console.log(me.age)
 // me.firstName = 'Odalis'
-console.log(me)
+// console.log(me)
 
 const person2 = new Person('Juana', 'Lorenzo', 48, ['preaching', 'papi'])
-console.log(person2)
+// console.log(person2)
 
 // So the attributes are different for each person instance, but there are things that are the same. Shared
 // behaviors. JS uses prototypal inheritance
@@ -85,8 +119,8 @@ Person.prototype.getBio = function () {
 
   return bio
 }
-console.log(me.getBio())
-console.log(person2.getBio())
+// console.log(me.getBio())
+// console.log(person2.getBio())
 
 // it also key to understand the pointer semantics in play here. Even if there are
 // instances already created of our constructor, if we make a change in the prototype
@@ -104,4 +138,38 @@ Person.prototype.setName = function (fullName) {
 }
 
 me.setName('Xavier Whiteside')
-console.log(me.getBio()) 
+// console.log(me.getBio()) 
+
+/////////////////////////////// Challenge ////////////////////////////////////////
+// 1. Create class for students extending PersonClass
+// 2. Track student grade 0 - 100.
+// 3. Override bio to print a passing or failing message. 70 and above "Andrew is passing the class"
+// 4. Create 'updateGrade' that takes the amount to add or remove from the grade
+
+// Create a student
+// Print status (failing or passing)
+// Change grade to change status.
+// Print status again.
+
+class Student extends PersonClass {
+  // define what makes student unique, part of the constructor
+  constructor(firstNme, lastName, age, grade, likes) {
+    super(firstNme, lastName, age, likes);
+    this.grade = grade;
+  }
+  // override 'getBio' and create 'updateGrade' which is unique to student
+  getBio() {
+    return `${this.firstName} is ${this.grade >= 70 ? 'passing' : 'failing'} this class.`
+  }
+  updateGrade(update) {
+    this.grade += update;
+  }
+}
+
+const student = new Student('Kelen', 'Whiteside', 17, 98,);
+console.log(student);
+console.log(student.getBio());
+student.updateGrade(-40);
+student.fullName = 'Delight Whiteside';
+console.log(student);
+console.log(student.getBio());

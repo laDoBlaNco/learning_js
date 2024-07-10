@@ -7,16 +7,16 @@ const puzzle = document.getElementById('puzzle')
 const statusView = document.getElementById('statusMessage')
 const game = new Hangman('Cat', 2)
 
-puzzle.innerHTML = game.getPuzzle()
-statusView.innerHTML = game.getStatus();
+puzzle.innerHTML = game.puzzle;
+statusView.innerHTML = game.statusMessage;
 
 // one difference in this and what Andrew publishes is that the 'charCode' method is deprecated
 // so I've changed it to e.key where I can which is much easier
 window.addEventListener('keypress', (e) => {
   const guess = e.key;
   game.makeGuess(guess)
-  puzzle.innerHTML = game.getPuzzle()
-  statusView.innerHTML = game.getStatus();
+  puzzle.innerHTML = game.puzzle;
+  statusView.innerHTML = game.statusMessage;
 })
 
 

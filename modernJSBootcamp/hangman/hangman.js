@@ -26,6 +26,10 @@
 //    3. Finsished -> Great work! You guessed the word.
 // Fifth Challenge:
 // 17. Convert this file to the new class syntax
+// Sixth Challenge:
+// 18. Convert 'getStatusMessage' to a custom getter for 'statusMessage'
+// 19. Convert 'getPuzzle' to a custom getter for 'puzzle'
+// 20. Change usage in app.js
 
 
 //====================== New Class syntax =========================================================
@@ -49,7 +53,7 @@ class Hangman {
       this.status = 'playing'
     }
   }
-  getPuzzle() {
+  get puzzle() {
     let puzzle = ''
 
     this.word.forEach((letter) => {
@@ -80,7 +84,7 @@ class Hangman {
       this.calculateStatus()
     }
   }
-  getStatus() {
+  get statusMessage() {
     if (this.status === 'finished') {
       return `Great work! You guessed the word.`
     } else if (this.status === 'failed') {
