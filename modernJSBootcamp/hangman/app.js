@@ -3,6 +3,21 @@
 // 3. Call that method after a guess is processed
 // 4. Use console.log to print the status.
 
+// HTTP [Hypertext Transfer Protocol]
+// Request - What do we want to do, what are we requesting
+// Response - What was actually done, the response from the server
+
+// So for this one, Andrew has an endpoint set up that provides random phrases in the form
+// of json. So we are going to focus on sending requests to get that json and use it in 
+// our puzzle.
+
+// making an http request
+
+const request = new XMLHttpRequest() // though the names same XML which isn't that populat anymore, 
+// we can use this constructor to transfer any data we want, including json
+request.open('GET', 'http://puzzle.mead.io/puzzle');
+request.send();
+
 const puzzle = document.getElementById('puzzle')
 const statusView = document.getElementById('statusMessage')
 const game = new Hangman('Car Parts', 2)
@@ -22,7 +37,7 @@ window.addEventListener('keypress', (e) => {
 
 
 
-/*
+/*`
 // Primitive value: a value that does not have properties. it is a non-object
 // There are 5 primitive objects: string, number, boolean, null, and undefined
 // Everything else is an object. (including arrays and functions). so let's
