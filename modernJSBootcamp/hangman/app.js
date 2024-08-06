@@ -15,6 +15,13 @@
 
 const request = new XMLHttpRequest() // though the names same XML which isn't that populat anymore, 
 // we can use this constructor to transfer any data we want, including json
+
+request.addEventListener('readystatechange', (e) => {
+  if (e.target.readyState === 4) {
+    console.log(e.target);
+  }
+})
+
 request.open('GET', 'http://puzzle.mead.io/puzzle');
 request.send();
 
